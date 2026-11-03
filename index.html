@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in | Sherpa</title>
+  </head>
+  <body>
+    <main>
+      <section id="login-view" aria-labelledby="welcome-heading">
+        <header>
+          <p>Sherpa</p>
+          <h1 id="welcome-heading">Welcome back!</h1>
+          <p>A tool that guides you through the way.<br>Sign in to begin your climb.</p>
+        </header>
+
+        <form id="login-form" method="post">
+          <p id="login-error" role="alert" hidden></p>
+
+          <div>
+            <label for="role">Sign in as</label>
+            <select id="role" name="role" required>
+              <option value="" selected disabled>Select your role</option>
+              <option value="student">Student</option>
+              <option value="instructor">Teacher</option>
+              <option value="employer">Employer</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" autocomplete="username" placeholder="you@example.com" required>
+          </div>
+
+          <div>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+          </div>
+
+          <button type="submit">Sign in</button>
+        </form>
+
+        <footer>
+          <p>New to Sherpa? <button id="signup-button" type="button">Sign up</button></p>
+          <p>Your space. Safe and secure.</p>
+        </footer>
+      </section>
+
+      <section id="student-view" aria-labelledby="student-heading" hidden>
+        <h1 id="student-heading">Student</h1>
+      </section>
+
+      <section id="instructor-view" aria-labelledby="instructor-heading" hidden>
+        <h1 id="instructor-heading">Instructor</h1>
+      </section>
+
+      <section id="employer-view" aria-labelledby="employer-heading" hidden>
+        <h1 id="employer-heading">Employer</h1>
+      </section>
+    </main>
+  </body>
+</html>
