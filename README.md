@@ -5,11 +5,11 @@ test their skills, and network with other students, professors, and employers. P
 to create test questions to benchmark students. Employers can login to scout out students as well as 
 create test questions.
 
-Instructions for installing dependencies:
+**Instructions for installing dependencies:**
 
-Instructions for running the application locally:
+**Instructions for running the application locally:**
 
-Descriptions of the implemented features:
+**Descriptions of the implemented features:**
 
-Instructions for testing the feature:
+**Instructions for testing the feature:**
 
