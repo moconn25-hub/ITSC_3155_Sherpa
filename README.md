@@ -7,9 +7,12 @@ create test questions.
 
 **Instructions for installing dependencies:**
 
-**Instructions for running the application locally:**
+**Instructions for running the application locally:** Reveal in File Explorer
 
-**Descriptions of the implemented features:**
+**Descriptions of the implemented features:** Sign in page,
 
-**Instructions for testing the feature:**
+**Instructions for testing the feature:** enter email and password: 
+(Student: student@sherpa.test / StudentDemo123!
+Instructor: instructor@sherpa.test / InstructorDemo123!
+Employer: employer@sherpa.test / EmployerDemo123!)
 
