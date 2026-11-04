@@ -16,3 +16,4 @@ create test questions.
 Instructor: instructor@sherpa.test / InstructorDemo123!
 Employer: employer@sherpa.test / EmployerDemo123!)
 
+AI usage: Copilot was used to generate code and minimal implementation plan 
