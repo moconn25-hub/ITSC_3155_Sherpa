@@ -9,10 +9,13 @@ control "Validation and auth service" as Auth
 control "Prisma data-access layer" as Prisma
 database SQLite as DB
 
-Visitor -> UI: Enter email, password,\nfirst name, last name, major,\ndesired career field, classification
+Visitor -> UI: Enter email, password,\nfirst name, last name, classification
+opt Classification is student
+  Visitor -> UI: Select major and desired career field
+end
 Visitor -> UI: Submit sign-up form
 UI -> API: POST /api/auth/signup\n(submitted form fields)
-API -> Auth: Validate required fields,\nemail format and classification
+API -> Auth: Validate common fields and email;\nrequire major and career for students
 
 alt Invalid input
   Auth --> API: Validation errors
@@ -20,8 +23,8 @@ alt Invalid input
   UI --> Visitor: Show field errors
 else Valid input
   Auth -> Auth: Normalize email\nand hash password
-  Auth -> Prisma: Create User and Profile
-  Prisma -> DB: Insert User and Profile\nin one transaction
+  Auth -> Prisma: Create User; add student profile\nonly for student classification
+  Prisma -> DB: Insert User and optional Profile\nin one transaction
   alt Email already exists
     DB --> Prisma: Unique constraint violation
     Prisma --> Auth: Unique constraint error
@@ -29,8 +32,8 @@ else Valid input
     API --> UI: 409 Conflict
     UI --> Visitor: Show account-exists message
   else Account created
-    DB --> Prisma: Persisted User and Profile
-    Prisma --> Auth: Created User and Profile
+    DB --> Prisma: Persisted User and optional Profile
+    Prisma --> Auth: Created User and optional Profile
     Auth --> API: Account created
     API --> UI: 201 Created
     alt Classification is student

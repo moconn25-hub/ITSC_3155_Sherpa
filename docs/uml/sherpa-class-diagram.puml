@@ -8,6 +8,9 @@ note top
   IMPLEMENTED SCOPE: sign-up only
   IDs are String values generated as UUIDs for SQLite/Prisma.
   User.role is stored as a String (student, teacher, employer).
+  Major and desired career are student-only optional profile fields.
+  Require both during student sign-up validation; Prisma cannot express
+  this role-dependent requirement in the schema alone.
 end note
 
 package "Sign-up entities" {
@@ -23,8 +26,8 @@ package "Sign-up entities" {
 
   class Profile {
     +userId: String <<PK, FK>>
-    +majorProgramId: String <<FK>>
-    +desiredCareerId: String <<FK>>
+    +majorProgramId: String? <<FK, student only>>
+    +desiredCareerId: String? <<FK, student only>>
   }
 
   class Program {
@@ -38,13 +41,14 @@ package "Sign-up entities" {
   }
 }
 
-User "1" -- "1" Profile : has
-Program "1" <-- "0..*" Profile : selected major
-CareerField "1" <-- "0..*" Profile : desired career
+User "1" -- "0..1" Profile : has
+Program "0..1" <-- "0..*" Profile : selected major
+CareerField "0..1" <-- "0..*" Profile : desired career
 
 note bottom
   Sign-up form values: email, first name, last name, classification (role),
-  major, and desired career field. The password is stored as a hash on User.
+  and password. Student sign-ups additionally require major and desired career.
+  The password is stored as a hash on User.
   Profile fields not collected during sign-up are intentionally excluded.
 end note
 @enduml

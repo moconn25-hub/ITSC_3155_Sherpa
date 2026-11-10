@@ -1,0 +1,19 @@
+{
+  "name": "itsc-3155-sherpa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sherpa student course and skills roadmap application",
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "migrate": "prisma migrate dev",
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0"
+  },
+  "devDependencies": {
+    "prisma": "^6.19.0"
+  }
+}

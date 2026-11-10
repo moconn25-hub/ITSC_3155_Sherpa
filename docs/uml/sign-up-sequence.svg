@@ -8,9 +8,9 @@
 <rect x="1020" y="94" width="250" height="48" rx="8" fill="#eeeafd" stroke="#bdbbd3"/><text class="participant" text-anchor="middle" x="1145" y="114">Validation and auth service</text><text class="kind" text-anchor="middle" x="1145" y="131">service</text><line class="life" x1="1145" y1="142" x2="1145" y2="1426"/>
 <rect x="1350" y="94" width="250" height="48" rx="8" fill="#eeeafd" stroke="#bdbbd3"/><text class="participant" text-anchor="middle" x="1475" y="114">Prisma data-access layer</text><text class="kind" text-anchor="middle" x="1475" y="131">data access</text><line class="life" x1="1475" y1="142" x2="1475" y2="1426"/>
 <rect x="1680" y="94" width="250" height="48" rx="8" fill="#eeeafd" stroke="#bdbbd3"/><text class="participant" text-anchor="middle" x="1805" y="114">SQLite database</text><text class="kind" text-anchor="middle" x="1805" y="131">database</text><line class="life" x1="1805" y1="142" x2="1805" y2="1426"/>
-<text class="message" text-anchor="middle" x="320" y="169">Enter email, password, first name, last</text>
-<text class="message" text-anchor="middle" x="320" y="183">name, major, desired career field, and</text>
-<text class="message" text-anchor="middle" x="320" y="197">classification</text>
+<text class="message" text-anchor="middle" x="320" y="169">Enter common fields and classification;</text>
+<text class="message" text-anchor="middle" x="320" y="183">students also select major and desired</text>
+<text class="message" text-anchor="middle" x="320" y="197">career field</text>
 <line class="request" x1="163" y1="221" x2="475" y2="221"/>
 <path d="M 467 216 l 8 5 -8 5" fill="none" stroke="#5c43a8" stroke-width="1.5"/>
 <text class="message" text-anchor="middle" x="320" y="240">Submit sign-up form</text>
@@ -20,8 +20,8 @@
 <text class="message" text-anchor="middle" x="650" y="302">fields</text>
 <line class="request" x1="493" y1="326" x2="805" y2="326"/>
 <path d="M 797 321 l 8 5 -8 5" fill="none" stroke="#5c43a8" stroke-width="1.5"/>
-<text class="message" text-anchor="middle" x="980" y="344">Validate required fields, email, and</text>
-<text class="message" text-anchor="middle" x="980" y="358">classification</text>
+<text class="message" text-anchor="middle" x="980" y="344">Validate common fields and email; require</text>
+<text class="message" text-anchor="middle" x="980" y="358">major and career for students</text>
 <line class="request" x1="823" y1="382" x2="1135" y2="382"/>
 <path d="M 1127 377 l 8 5 -8 5" fill="none" stroke="#5c43a8" stroke-width="1.5"/>
 <rect x="24" y="386" width="1912" height="27" rx="5" fill="#e9e5fb"/><text class="section" x="38" y="404">Invalid input</text>
@@ -36,11 +36,11 @@
 <path d="M 173 549 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
 <rect x="24" y="564" width="1912" height="27" rx="5" fill="#e9e5fb"/><text class="section" x="38" y="582">Valid input - create account</text>
 <path d="M 1145 628 h 45 v 13 h -38" fill="none" stroke="#5c43a8" stroke-width="1.5"/><text class="message" x="1198" y="620">Normalize email and hash password</text>
-<text class="message" text-anchor="middle" x="1310" y="660">Create User and Profile (major and desired</text>
-<text class="message" text-anchor="middle" x="1310" y="674">career)</text>
+<text class="message" text-anchor="middle" x="1310" y="660">Create User; add student profile only for</text>
+<text class="message" text-anchor="middle" x="1310" y="674">student classification</text>
 <line class="request" x1="1153" y1="698" x2="1465" y2="698"/>
 <path d="M 1457 693 l 8 5 -8 5" fill="none" stroke="#5c43a8" stroke-width="1.5"/>
-<text class="message" text-anchor="middle" x="1640" y="716">Insert User and Profile in one transaction</text>
+<text class="message" text-anchor="middle" x="1640" y="716">Insert User and optional Profile atomically</text>
 <line class="request" x1="1483" y1="740" x2="1795" y2="740"/>
 <path d="M 1787 735 l 8 5 -8 5" fill="none" stroke="#5c43a8" stroke-width="1.5"/>
 <rect x="24" y="750" width="1912" height="27" rx="5" fill="#e9e5fb"/><text class="section" x="38" y="768">Alternative: email already exists</text>
@@ -60,10 +60,10 @@
 <line class="response" x1="477" y1="1014" x2="165" y2="1014"/>
 <path d="M 173 1009 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
 <rect x="24" y="1024" width="1912" height="27" rx="5" fill="#e9e5fb"/><text class="section" x="38" y="1042">Alternative: account created</text>
-<text class="message" text-anchor="middle" x="1640" y="1072">Return persisted User and Profile</text>
+<text class="message" text-anchor="middle" x="1640" y="1072">Return persisted User and optional Profile</text>
 <line class="response" x1="1797" y1="1096" x2="1485" y2="1096"/>
 <path d="M 1493 1091 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
-<text class="message" text-anchor="middle" x="1310" y="1120">Return created User and Profile</text>
+<text class="message" text-anchor="middle" x="1310" y="1120">Return created User and optional Profile</text>
 <line class="response" x1="1467" y1="1144" x2="1155" y2="1144"/>
 <path d="M 1163 1139 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
 <text class="message" text-anchor="middle" x="980" y="1168">Return successful account creation</text>
