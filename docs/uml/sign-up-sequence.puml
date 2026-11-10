@@ -1,0 +1,43 @@
+@startuml SherpaSignUp
+title Sherpa — Sign-up sequence
+autonumber
+
+actor Visitor
+boundary "Sign-up form" as UI
+control "Express API\nPOST /api/auth/signup" as API
+control "Validation and auth service" as Auth
+control "Prisma data-access layer" as Prisma
+database SQLite as DB
+
+Visitor -> UI: Enter email, password,\nfirst name, last name, major,\ndesired career field, classification
+Visitor -> UI: Submit sign-up form
+UI -> API: POST /api/auth/signup\n(submitted form fields)
+API -> Auth: Validate required fields,\nemail format and classification
+
+alt Invalid input
+  Auth --> API: Validation errors
+  API --> UI: 400 Bad Request\n(field errors)
+  UI --> Visitor: Show field errors
+else Valid input
+  Auth -> Auth: Normalize email\nand hash password
+  Auth -> Prisma: Create User and Profile
+  Prisma -> DB: Insert User and Profile\nin one transaction
+  alt Email already exists
+    DB --> Prisma: Unique constraint violation
+    Prisma --> Auth: Unique constraint error
+    Auth --> API: Email is already registered
+    API --> UI: 409 Conflict
+    UI --> Visitor: Show account-exists message
+  else Account created
+    DB --> Prisma: Persisted User and Profile
+    Prisma --> Auth: Created User and Profile
+    Auth --> API: Account created
+    API --> UI: 201 Created
+    alt Classification is student
+      UI --> Visitor: Continue to major skill assessment
+    else Classification is teacher or employer
+      UI --> Visitor: Continue to role home/profile
+    end
+  end
+end
+@enduml
