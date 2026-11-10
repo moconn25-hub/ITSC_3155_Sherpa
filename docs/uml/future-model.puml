@@ -1,0 +1,168 @@
+@startuml SherpaFutureModel
+title Sherpa — Planned Data Model (Not Implemented)
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+note top
+  PLANNED ONLY — NOT IMPLEMENTED
+  These entities are outside the current sign-up implementation scope.
+  User and Program below are references to sign-up entities, not planned additions.
+end note
+
+package "Existing sign-up entities (references only)" {
+  class User <<existing sign-up scope>> {
+    +id: String <<PK, uuid>>
+  }
+
+  class Program <<existing sign-up scope>> {
+    +id: String <<PK, uuid>>
+    +name: String <<unique, required>>
+  }
+}
+
+package "Planned academic catalog" {
+  class Course {
+    +id: String <<PK, uuid>>
+    +courseCode: String <<unique, required>>
+    +title: String <<required>>
+    +description: String <<required>>
+  }
+
+  class Skill {
+    +id: String <<PK, uuid>>
+    +name: String <<unique, required>>
+    +description: String
+  }
+
+  class ProgramCourse <<junction>> {
+    +programId: String <<PK, FK>>
+    +courseId: String <<PK, FK>>
+    +isRequired: Boolean <<required>>
+    +displayOrder: Integer
+  }
+
+  class CoursePrerequisite <<junction>> {
+    +courseId: String <<PK, FK>>
+    +prerequisiteCourseId: String <<PK, FK>>
+  }
+
+  class CourseSkill <<junction>> {
+    +courseId: String <<PK, FK>>
+    +skillId: String <<PK, FK>>
+  }
+
+  class CourseTeacher <<junction>> {
+    +courseId: String <<PK, FK>>
+    +teacherId: String <<PK, FK>>
+  }
+
+  class UserSkillAssessment <<junction>> {
+    +userId: String <<PK, FK>>
+    +skillId: String <<PK, FK>>
+    +selfAssessed: Boolean <<required>>
+    +updatedAt: DateTime <<required>>
+  }
+}
+
+package "Planned knowledge checks" {
+  class Question {
+    +id: String <<PK, uuid>>
+    +courseId: String <<FK>>
+    +authorId: String <<FK>>
+    +skillId: String <<FK>>
+    +prompt: String <<required>>
+    +questionType: String <<required>>
+    +answerKey: String
+    +createdAt: DateTime <<required>>
+    +isActive: Boolean <<required>>
+  }
+
+  class QuestionOption {
+    +id: String <<PK, uuid>>
+    +questionId: String <<FK>>
+    +optionText: String <<required>>
+    +isCorrect: Boolean <<required>>
+    +position: Integer <<required>>
+    .. unique(questionId, position)
+  }
+
+  class QuizAttempt {
+    +id: String <<PK, uuid>>
+    +studentId: String <<FK>>
+    +courseId: String <<FK>>
+    +startedAt: DateTime <<required>>
+    +completedAt: DateTime
+    +scorePercent: Integer <<0..100>>
+  }
+
+  class AttemptAnswer <<junction>> {
+    +attemptId: String <<PK, FK>>
+    +questionId: String <<PK, FK>>
+    +selectedOptionId: String <<FK>>
+    +answerText: String
+    +isCorrect: Boolean <<required>>
+  }
+}
+
+package "Planned networking" {
+  class Post {
+    +id: String <<PK, uuid>>
+    +authorId: String <<FK>>
+    +body: String <<required>>
+    +createdAt: DateTime <<required>>
+    +updatedAt: DateTime
+  }
+
+  class PostLike <<junction>> {
+    +postId: String <<PK, FK>>
+    +userId: String <<PK, FK>>
+    +createdAt: DateTime <<required>>
+  }
+
+  class PostComment {
+    +id: String <<PK, uuid>>
+    +postId: String <<FK>>
+    +authorId: String <<FK>>
+    +body: String <<required>>
+    +createdAt: DateTime <<required>>
+  }
+
+  class DirectMessage {
+    +id: String <<PK, uuid>>
+    +senderId: String <<FK>>
+    +recipientId: String <<FK>>
+    +body: String <<required>>
+    +sentAt: DateTime <<required>>
+    +readAt: DateTime
+  }
+}
+
+Program "1" -- "0..*" ProgramCourse
+Course "1" -- "0..*" ProgramCourse
+Course "1" -- "0..*" CoursePrerequisite : course
+Course "1" -- "0..*" CoursePrerequisite : prerequisite
+Course "1" -- "0..*" CourseSkill
+Skill "1" -- "0..*" CourseSkill
+Course "1" -- "0..*" CourseTeacher
+Course "1" -- "0..*" Question
+Skill "0..1" <-- "0..*" Question : topic
+User "1" -- "0..*" CourseTeacher : teacher
+User "1" -- "0..*" UserSkillAssessment
+Skill "1" -- "0..*" UserSkillAssessment
+User "1" -- "0..*" Question : author
+Question "1" *-- "0..*" QuestionOption
+User "1" -- "0..*" QuizAttempt : student
+Course "1" -- "0..*" QuizAttempt
+QuizAttempt "1" *-- "0..*" AttemptAnswer
+Question "1" -- "0..*" AttemptAnswer
+QuestionOption "0..1" <-- "0..*" AttemptAnswer : selected option
+User "1" -- "0..*" Post : author
+Post "1" *-- "0..*" PostLike
+User "1" -- "0..*" PostLike
+Post "1" *-- "0..*" PostComment
+User "1" -- "0..*" PostComment : author
+User "1" -- "0..*" DirectMessage : sender
+User "1" -- "0..*" DirectMessage : recipient
+
+@enduml

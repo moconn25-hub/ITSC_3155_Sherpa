@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1240" viewBox="0 0 1920 1240" role="img" aria-labelledby="title desc">
+<title id="title">Sherpa - Planned Data Model (Not Implemented)</title><desc id="desc">UML classes, fields, and associations from the accompanying PlantUML source.</desc>
+<rect width="1920" height="1240" fill="#f7f8fc"/>
+<style>text{font-family:Segoe UI,Arial,sans-serif;fill:#24223a}.title{font-size:30px;font-weight:700}.sub{font-size:15px;fill:#64647a}.pkg{font-size:18px;font-weight:700;fill:#5b37bb}.name{font-size:15px;font-weight:700}.stereo{font-size:10px;fill:#6c5bad}.field{font-size:11px;fill:#44445b}.rel{font-size:12px;fill:#33334c}.assoc{stroke:#6553a2;stroke-width:1.6;fill:none}.mult{font-size:12px;fill:#5b37bb}</style>
+<text class="title" x="30" y="46">Sherpa - Planned Data Model (Not Implemented)</text><text class="sub" x="30" y="74">PLANNED ONLY. User and Program are sign-up references; remaining entities are not implemented.</text>
+<text class="pkg" x="28" y="130">Existing sign-up entities (references only)</text>
+<rect x="28" y="142" width="450" height="61" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 36 142 H 470 Q 478 142 478 150 V 176 H 28 V 150 Q 28 142 36 142" fill="#eae6fb"/>
+<text class="name" x="40" y="164">User</text>
+<text class="stereo" text-anchor="end" x="466" y="163">&lt;&lt;existing sign-up scope&gt;&gt;</text>
+<text class="field" x="40" y="195">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<rect x="28" y="213" width="450" height="80" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 36 213 H 470 Q 478 213 478 221 V 247 H 28 V 221 Q 28 213 36 213" fill="#eae6fb"/>
+<text class="name" x="40" y="235">Program</text>
+<text class="stereo" text-anchor="end" x="466" y="234">&lt;&lt;existing sign-up scope&gt;&gt;</text>
+<text class="field" x="40" y="266">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<text class="field" x="40" y="285">name: String &lt;&lt;unique, required&gt;&gt;</text>
+<text class="pkg" x="502" y="130">Planned academic catalog</text>
+<rect x="502" y="142" width="450" height="118" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 510 142 H 944 Q 952 142 952 150 V 176 H 502 V 150 Q 502 142 510 142" fill="#eae6fb"/>
+<text class="name" x="514" y="164">Course</text>
+<text class="field" x="514" y="195">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<text class="field" x="514" y="214">courseCode: String &lt;&lt;unique, required&gt;&gt;</text>
+<text class="field" x="514" y="233">title: String &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="514" y="252">description: String &lt;&lt;required&gt;&gt;</text>
+<rect x="502" y="270" width="450" height="99" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 510 270 H 944 Q 952 270 952 278 V 304 H 502 V 278 Q 502 270 510 270" fill="#eae6fb"/>
+<text class="name" x="514" y="292">Skill</text>
+<text class="field" x="514" y="323">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<text class="field" x="514" y="342">name: String &lt;&lt;unique, required&gt;&gt;</text>
+<text class="field" x="514" y="361">description: String</text>
+<rect x="502" y="379" width="450" height="118" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 510 379 H 944 Q 952 379 952 387 V 413 H 502 V 387 Q 502 379 510 379" fill="#eae6fb"/>
+<text class="name" x="514" y="401">ProgramCourse</text>
+<text class="stereo" text-anchor="end" x="940" y="400">&lt;&lt;junction&gt;&gt;</text>
+<text class="field" x="514" y="432">programId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<text class="field" x="514" y="451">courseId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<text class="field" x="514" y="470">isRequired: Boolean &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="514" y="489">displayOrder: Integer</text>
+<rect x="502" y="507" width="450" height="80" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 510 507 H 944 Q 952 507 952 515 V 541 H 502 V 515 Q 502 507 510 507" fill="#eae6fb"/>
+<text class="name" x="514" y="529">CoursePrerequisite</text>
+<text class="stereo" text-anchor="end" x="940" y="528">&lt;&lt;junction&gt;&gt;</text>
+<text class="field" x="514" y="560">courseId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<text class="field" x="514" y="579">prerequisiteCourseId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<rect x="502" y="597" width="450" height="80" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 510 597 H 944 Q 952 597 952 605 V 631 H 502 V 605 Q 502 597 510 597" fill="#eae6fb"/>
+<text class="name" x="514" y="619">CourseSkill</text>
+<text class="stereo" text-anchor="end" x="940" y="618">&lt;&lt;junction&gt;&gt;</text>
+<text class="field" x="514" y="650">courseId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<text class="field" x="514" y="669">skillId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<rect x="502" y="687" width="450" height="80" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 510 687 H 944 Q 952 687 952 695 V 721 H 502 V 695 Q 502 687 510 687" fill="#eae6fb"/>
+<text class="name" x="514" y="709">CourseTeacher</text>
+<text class="stereo" text-anchor="end" x="940" y="708">&lt;&lt;junction&gt;&gt;</text>
+<text class="field" x="514" y="740">courseId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<text class="field" x="514" y="759">teacherId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<rect x="502" y="777" width="450" height="118" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 510 777 H 944 Q 952 777 952 785 V 811 H 502 V 785 Q 502 777 510 777" fill="#eae6fb"/>
+<text class="name" x="514" y="799">UserSkillAssessment</text>
+<text class="stereo" text-anchor="end" x="940" y="798">&lt;&lt;junction&gt;&gt;</text>
+<text class="field" x="514" y="830">userId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<text class="field" x="514" y="849">skillId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<text class="field" x="514" y="868">selfAssessed: Boolean &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="514" y="887">updatedAt: DateTime &lt;&lt;required&gt;&gt;</text>
+<text class="pkg" x="976" y="130">Planned knowledge checks</text>
+<rect x="976" y="142" width="450" height="213" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 984 142 H 1418 Q 1426 142 1426 150 V 176 H 976 V 150 Q 976 142 984 142" fill="#eae6fb"/>
+<text class="name" x="988" y="164">Question</text>
+<text class="field" x="988" y="195">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<text class="field" x="988" y="214">courseId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="988" y="233">authorId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="988" y="252">skillId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="988" y="271">prompt: String &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="988" y="290">questionType: String &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="988" y="309">answerKey: String</text>
+<text class="field" x="988" y="328">createdAt: DateTime &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="988" y="347">isActive: Boolean &lt;&lt;required&gt;&gt;</text>
+<rect x="976" y="365" width="450" height="156" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 984 365 H 1418 Q 1426 365 1426 373 V 399 H 976 V 373 Q 976 365 984 365" fill="#eae6fb"/>
+<text class="name" x="988" y="387">QuestionOption</text>
+<text class="field" x="988" y="418">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<text class="field" x="988" y="437">questionId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="988" y="456">optionText: String &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="988" y="475">isCorrect: Boolean &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="988" y="494">position: Integer &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="988" y="513">.. unique(questionId, position)</text>
+<rect x="976" y="531" width="450" height="156" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 984 531 H 1418 Q 1426 531 1426 539 V 565 H 976 V 539 Q 976 531 984 531" fill="#eae6fb"/>
+<text class="name" x="988" y="553">QuizAttempt</text>
+<text class="field" x="988" y="584">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<text class="field" x="988" y="603">studentId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="988" y="622">courseId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="988" y="641">startedAt: DateTime &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="988" y="660">completedAt: DateTime</text>
+<text class="field" x="988" y="679">scorePercent: Integer &lt;&lt;0..100&gt;&gt;</text>
+<rect x="976" y="697" width="450" height="137" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 984 697 H 1418 Q 1426 697 1426 705 V 731 H 976 V 705 Q 976 697 984 697" fill="#eae6fb"/>
+<text class="name" x="988" y="719">AttemptAnswer</text>
+<text class="stereo" text-anchor="end" x="1414" y="718">&lt;&lt;junction&gt;&gt;</text>
+<text class="field" x="988" y="750">attemptId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<text class="field" x="988" y="769">questionId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<text class="field" x="988" y="788">selectedOptionId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="988" y="807">answerText: String</text>
+<text class="field" x="988" y="826">isCorrect: Boolean &lt;&lt;required&gt;&gt;</text>
+<text class="pkg" x="1450" y="130">Planned networking</text>
+<rect x="1450" y="142" width="450" height="137" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 1458 142 H 1892 Q 1900 142 1900 150 V 176 H 1450 V 150 Q 1450 142 1458 142" fill="#eae6fb"/>
+<text class="name" x="1462" y="164">Post</text>
+<text class="field" x="1462" y="195">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<text class="field" x="1462" y="214">authorId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="1462" y="233">body: String &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="1462" y="252">createdAt: DateTime &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="1462" y="271">updatedAt: DateTime</text>
+<rect x="1450" y="289" width="450" height="99" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 1458 289 H 1892 Q 1900 289 1900 297 V 323 H 1450 V 297 Q 1450 289 1458 289" fill="#eae6fb"/>
+<text class="name" x="1462" y="311">PostLike</text>
+<text class="stereo" text-anchor="end" x="1888" y="310">&lt;&lt;junction&gt;&gt;</text>
+<text class="field" x="1462" y="342">postId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<text class="field" x="1462" y="361">userId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<text class="field" x="1462" y="380">createdAt: DateTime &lt;&lt;required&gt;&gt;</text>
+<rect x="1450" y="398" width="450" height="137" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 1458 398 H 1892 Q 1900 398 1900 406 V 432 H 1450 V 406 Q 1450 398 1458 398" fill="#eae6fb"/>
+<text class="name" x="1462" y="420">PostComment</text>
+<text class="field" x="1462" y="451">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<text class="field" x="1462" y="470">postId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="1462" y="489">authorId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="1462" y="508">body: String &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="1462" y="527">createdAt: DateTime &lt;&lt;required&gt;&gt;</text>
+<rect x="1450" y="545" width="450" height="156" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 1458 545 H 1892 Q 1900 545 1900 553 V 579 H 1450 V 553 Q 1450 545 1458 545" fill="#eae6fb"/>
+<text class="name" x="1462" y="567">DirectMessage</text>
+<text class="field" x="1462" y="598">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<text class="field" x="1462" y="617">senderId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="1462" y="636">recipientId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="1462" y="655">body: String &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="1462" y="674">sentAt: DateTime &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="1462" y="693">readAt: DateTime</text>
+<text class="pkg" x="30" y="925">Associations and multiplicities</text>
+<text class="rel" x="30" y="949">Program &quot;1&quot; -- &quot;0..*&quot; ProgramCourse</text>
+<text class="rel" x="30" y="968">Course &quot;1&quot; -- &quot;0..*&quot; ProgramCourse</text>
+<text class="rel" x="30" y="987">Course &quot;1&quot; -- &quot;0..*&quot; CoursePrerequisite : course</text>
+<text class="rel" x="30" y="1006">Course &quot;1&quot; -- &quot;0..*&quot; CoursePrerequisite : prerequisite</text>
+<text class="rel" x="30" y="1025">Course &quot;1&quot; -- &quot;0..*&quot; CourseSkill</text>
+<text class="rel" x="30" y="1044">Skill &quot;1&quot; -- &quot;0..*&quot; CourseSkill</text>
+<text class="rel" x="30" y="1063">Course &quot;1&quot; -- &quot;0..*&quot; CourseTeacher</text>
+<text class="rel" x="30" y="1082">Course &quot;1&quot; -- &quot;0..*&quot; Question</text>
+<text class="rel" x="30" y="1101">User &quot;1&quot; -- &quot;0..*&quot; CourseTeacher : teacher</text>
+<text class="rel" x="30" y="1120">User &quot;1&quot; -- &quot;0..*&quot; UserSkillAssessment</text>
+<text class="rel" x="30" y="1139">Skill &quot;1&quot; -- &quot;0..*&quot; UserSkillAssessment</text>
+<text class="rel" x="30" y="1158">User &quot;1&quot; -- &quot;0..*&quot; Question : author</text>
+<text class="rel" x="980" y="949">Question &quot;1&quot; *-- &quot;0..*&quot; QuestionOption</text>
+<text class="rel" x="980" y="968">User &quot;1&quot; -- &quot;0..*&quot; QuizAttempt : student</text>
+<text class="rel" x="980" y="987">Course &quot;1&quot; -- &quot;0..*&quot; QuizAttempt</text>
+<text class="rel" x="980" y="1006">QuizAttempt &quot;1&quot; *-- &quot;0..*&quot; AttemptAnswer</text>
+<text class="rel" x="980" y="1025">Question &quot;1&quot; -- &quot;0..*&quot; AttemptAnswer</text>
+<text class="rel" x="980" y="1044">User &quot;1&quot; -- &quot;0..*&quot; Post : author</text>
+<text class="rel" x="980" y="1063">Post &quot;1&quot; *-- &quot;0..*&quot; PostLike</text>
+<text class="rel" x="980" y="1082">User &quot;1&quot; -- &quot;0..*&quot; PostLike</text>
+<text class="rel" x="980" y="1101">Post &quot;1&quot; *-- &quot;0..*&quot; PostComment</text>
+<text class="rel" x="980" y="1120">User &quot;1&quot; -- &quot;0..*&quot; PostComment : author</text>
+<text class="rel" x="980" y="1139">User &quot;1&quot; -- &quot;0..*&quot; DirectMessage : sender</text>
+<text class="rel" x="980" y="1158">User &quot;1&quot; -- &quot;0..*&quot; DirectMessage : recipient</text>
+</svg>
