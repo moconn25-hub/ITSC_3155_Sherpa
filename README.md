@@ -14,6 +14,7 @@ Reveal in File Explorer
 - Sign in page
 
 **Instructions for testing the feature:**\
+[Vitest](https://vitest.dev/guide/#community) has been used for automated testing.\
 enter email and password: 
 (Student: student@sherpa.test / StudentDemo123!
 Instructor: instructor@sherpa.test / InstructorDemo123!
