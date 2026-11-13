@@ -1,231 +1,228 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f5f4ef">
-    <title>Sign up | Sherpa</title>
-    <style>
-      :root {
-        color-scheme: light;
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        color: #172a26;
-        background: #f5f4ef;
-        font-synthesis: none;
-        text-rendering: optimizeLegibility;
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4ef">
+  <title>Sign up | Sherpa</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #172a26;
+      background: #f5f4ef;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+      background:
+        radial-gradient(ellipse at 12% 90%, rgba(201, 219, 190, 0.4), transparent 34rem),
+        #f5f4ef;
+    }
+
+    .signup {
+      width: min(100%, 480px);
+      padding: clamp(32px, 7vw, 56px);
+      border: 1px solid #e6e7df;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 24px 70px rgba(28, 48, 41, 0.08);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 48px;
+      color: #8D58C7;
+      font-size: 19px;
+      font-weight: 750;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: #e7f0e2;
+      color: #8D58C7;
+    }
+
+    .brand-mark svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: #8D58C7;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 13ch;
+      margin: 0;
+      color: #172a26;
+      font-size: clamp(34px, 8vw, 42px);
+      font-weight: 650;
+      letter-spacing: -0.055em;
+      line-height: 1.08;
+    }
+
+    .intro {
+      margin: 16px 0 32px;
+      color: #65736d;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #263b34;
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      min-height: 52px;
+      padding: 0 15px;
+      border: 1px solid #d5ddd6;
+      border-radius: 10px;
+      outline: none;
+      background: #fff;
+      color: #172a26;
+      font: inherit;
+      font-size: 15px;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    input[type="email"]::placeholder {
+      color: #9aa59f;
+    }
+
+    input[type="email"]:hover {
+      border-color: #9aafa0;
+    }
+
+    input[type="email"]:focus-visible {
+      border-color: #397455;
+      box-shadow: 0 0 0 3px rgba(57, 116, 85, 0.16);
+    }
+
+    .hint {
+      margin: 9px 0 22px;
+      color: #75817b;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    button {
+      width: 100%;
+      min-height: 52px;
+      border: 0;
+      border-radius: 10px;
+      background: #8D58C7;
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-size: 15px;
+      font-weight: 650;
+      transition: background-color 150ms ease, transform 150ms ease;
+    }
+
+    button:hover {
+      background: #1b4532;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    button:focus-visible {
+      outline: 3px solid rgba(57, 116, 85, 0.3);
+      outline-offset: 3px;
+    }
+
+    .status {
+      min-height: 22px;
+      margin: 16px 0 0;
+      color: #49745c;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
       }
+    }
+  </style>
+</head>
 
-      * {
-        box-sizing: border-box;
-      }
+<body>
+  <main class="signup">
+    <div class="brand" aria-label="Sherpa">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="m3.5 18 6.1-9 3.2 4.3 2.2-3.1L20.5 18H3.5Z" stroke="currentColor" stroke-width="1.7"
+            stroke-linecap="round" stroke-linejoin="round" />
+          <path d="m9.2 9 1.7 2.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+        </svg>
+      </span>
+      sherpa
+    </div>
 
-      body {
-        min-width: 320px;
-        min-height: 100vh;
-        margin: 0;
-        display: grid;
-        place-items: center;
-        padding: 32px 20px;
-        background:
-          radial-gradient(ellipse at 12% 90%, rgba(201, 219, 190, 0.4), transparent 34rem),
-          #f5f4ef;
-      }
+    <p class="eyebrow">Create your account</p>
+    <h1>Your next step starts here.</h1>
+    <p class="intro">Get started with Sherpa using your email address.</p>
 
-      .signup {
-        width: min(100%, 480px);
-        padding: clamp(32px, 7vw, 56px);
-        border: 1px solid #e6e7df;
-        border-radius: 24px;
-        background: #fff;
-        box-shadow: 0 24px 70px rgba(28, 48, 41, 0.08);
-      }
+    <form id="signup-form">
+      <label class="field-label" for="email">Email address</label>
+      <input id="email" name="email" type="email" placeholder="you@example.edu" autocomplete="email" inputmode="email"
+        aria-describedby="email-hint signup-status" required>
+      <p class="hint" id="email-hint">Use an email address you can access.</p>
+      <button type="submit">Continue</button>
+      <p class="status" id="signup-status" role="status" aria-live="polite"></p>
+    </form>
+  </main>
 
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 48px;
-        color: #173c32;
-        font-size: 19px;
-        font-weight: 750;
-        letter-spacing: -0.04em;
-      }
+  <script>
+    const signupForm = document.querySelector("#signup-form");
+    const emailInput = document.querySelector("#email");
+    const signupStatus = document.querySelector("#signup-status");
 
-      .brand-mark {
-        width: 30px;
-        height: 30px;
-        display: grid;
-        place-items: center;
-        border-radius: 10px;
-        background: #e7f0e2;
-        color: #285d46;
-      }
+    signupForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      signupStatus.textContent = "Email looks good. The rest of sign-up is not included in this demo yet.";
+    });
 
-      .brand-mark svg {
-        width: 19px;
-        height: 19px;
-      }
+    emailInput.addEventListener("input", () => {
+      signupStatus.textContent = "";
+    });
+  </script>
+</body>
 
-      .eyebrow {
-        margin: 0 0 12px;
-        color: #49745c;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      h1 {
-        max-width: 13ch;
-        margin: 0;
-        color: #172a26;
-        font-size: clamp(34px, 8vw, 42px);
-        font-weight: 650;
-        letter-spacing: -0.055em;
-        line-height: 1.08;
-      }
-
-      .intro {
-        margin: 16px 0 32px;
-        color: #65736d;
-        font-size: 15px;
-        line-height: 1.65;
-      }
-
-      .field-label {
-        display: block;
-        margin-bottom: 8px;
-        color: #263b34;
-        font-size: 14px;
-        font-weight: 650;
-      }
-
-      input[type="email"] {
-        width: 100%;
-        min-height: 52px;
-        padding: 0 15px;
-        border: 1px solid #d5ddd6;
-        border-radius: 10px;
-        outline: none;
-        background: #fff;
-        color: #172a26;
-        font: inherit;
-        font-size: 15px;
-        transition: border-color 150ms ease, box-shadow 150ms ease;
-      }
-
-      input[type="email"]::placeholder {
-        color: #9aa59f;
-      }
-
-      input[type="email"]:hover {
-        border-color: #9aafa0;
-      }
-
-      input[type="email"]:focus-visible {
-        border-color: #397455;
-        box-shadow: 0 0 0 3px rgba(57, 116, 85, 0.16);
-      }
-
-      .hint {
-        margin: 9px 0 22px;
-        color: #75817b;
-        font-size: 12px;
-        line-height: 1.5;
-      }
-
-      button {
-        width: 100%;
-        min-height: 52px;
-        border: 0;
-        border-radius: 10px;
-        background: #25553e;
-        color: #fff;
-        cursor: pointer;
-        font: inherit;
-        font-size: 15px;
-        font-weight: 650;
-        transition: background-color 150ms ease, transform 150ms ease;
-      }
-
-      button:hover {
-        background: #1b4532;
-      }
-
-      button:active {
-        transform: translateY(1px);
-      }
-
-      button:focus-visible {
-        outline: 3px solid rgba(57, 116, 85, 0.3);
-        outline-offset: 3px;
-      }
-
-      .status {
-        min-height: 22px;
-        margin: 16px 0 0;
-        color: #49745c;
-        font-size: 13px;
-        line-height: 1.5;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          scroll-behavior: auto !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <main class="signup">
-      <div class="brand" aria-label="Sherpa">
-        <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="m3.5 18 6.1-9 3.2 4.3 2.2-3.1L20.5 18H3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="m9.2 9 1.7 2.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-          </svg>
-        </span>
-        sherpa
-      </div>
-
-      <p class="eyebrow">Create your account</p>
-      <h1>Your next step starts here.</h1>
-      <p class="intro">Get started with Sherpa using your email address.</p>
-
-      <form id="signup-form">
-        <label class="field-label" for="email">Email address</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="you@example.edu"
-          autocomplete="email"
-          inputmode="email"
-          aria-describedby="email-hint signup-status"
-          required
-        >
-        <p class="hint" id="email-hint">Use an email address you can access.</p>
-        <button type="submit">Continue</button>
-        <p class="status" id="signup-status" role="status" aria-live="polite"></p>
-      </form>
-    </main>
-
-    <script>
-      const signupForm = document.querySelector("#signup-form");
-      const emailInput = document.querySelector("#email");
-      const signupStatus = document.querySelector("#signup-status");
-
-      signupForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        signupStatus.textContent = "Email looks good. The rest of sign-up is not included in this demo yet.";
-      });
-
-      emailInput.addEventListener("input", () => {
-        signupStatus.textContent = "";
-      });
-    </script>
-  </body>
 </html>
