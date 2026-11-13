@@ -19,4 +19,6 @@ enter email and password:
 Instructor: instructor@sherpa.test / InstructorDemo123!
 Employer: employer@sherpa.test / EmployerDemo123!)
 
+SQLite was used due to it's easy of use and the ability to host a database locally.
+
 AI usage: Copilot was used to generate code and minimal implementation plan 
