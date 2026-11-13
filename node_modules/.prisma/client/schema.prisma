@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  firstName    String
+  lastName     String
+  role         String // student, teacher, or employer
+  createdAt    DateTime @default(now())
+
+  profile Profile?
+}
+
+model Profile {
+  userId          String  @id
+  majorProgramId  String?
+  desiredCareerId String?
+
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  majorProgram  Program?     @relation("ProfileMajor", fields: [majorProgramId], references: [id])
+  desiredCareer CareerField? @relation(fields: [desiredCareerId], references: [id])
+}
+
+model Program {
+  id   String @id @default(uuid())
+  name String @unique
+
+  profiles Profile[] @relation("ProfileMajor")
+}
+
+model CareerField {
+  id   String @id @default(uuid())
+  name String @unique
+
+  profiles Profile[]
+}
