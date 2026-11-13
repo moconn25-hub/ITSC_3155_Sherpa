@@ -1,4 +1,4 @@
-// Add testing code similar to below.
+// Add testing code similar to below (this code was found at https://vitest.dev/guide/#community).
 
 import { expect, test } from 'vitest' // I don't believe we need to change this top line.
 import { sum } from './app.js'
