@@ -346,6 +346,21 @@
           </select>
         </div>
         <p class="hint" id="career-hint">Choose the career field that best matches your interests or current role.</p>
+        <label class="field-label" for="classification">Classification</label>
+        <div class="select-wrap">
+          <select
+            id="classification"
+            name="classification"
+            aria-describedby="classification-hint signup-status"
+            required
+          >
+            <option value="" selected disabled>Select a classification</option>
+            <option value="student">Student</option>
+            <option value="employer">Employer</option>
+            <option value="teacher">Teacher</option>
+          </select>
+        </div>
+        <p class="hint" id="classification-hint">Choose Student, Employer, or Teacher.</p>
         <button type="submit">Continue</button>
         <p class="status" id="signup-status" role="status" aria-live="polite"></p>
       </form>
