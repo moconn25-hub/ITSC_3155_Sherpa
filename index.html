@@ -109,7 +109,8 @@
         font-weight: 650;
       }
 
-      input[type="email"] {
+      input[type="email"],
+      input[type="text"] {
         width: 100%;
         min-height: 52px;
         padding: 0 15px;
@@ -123,17 +124,31 @@
         transition: border-color 150ms ease, box-shadow 150ms ease;
       }
 
-      input[type="email"]::placeholder {
+      input[type="email"]::placeholder,
+      input[type="text"]::placeholder {
         color: #97a3b8;
       }
 
-      input[type="email"]:hover {
+      input[type="email"]:hover,
+      input[type="text"]:hover {
         border-color: #c1a0df;
       }
 
-      input[type="email"]:focus-visible {
+      input[type="email"]:focus-visible,
+      input[type="text"]:focus-visible {
         border-color: var(--accent);
         box-shadow: 0 0 0 3px var(--focus-ring);
+      }
+
+      .name-fields {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 22px;
+      }
+
+      .name-fields input {
+        min-width: 0;
       }
 
       .hint {
@@ -205,6 +220,32 @@
       <p class="intro">Get started with Sherpa using your email address.</p>
 
       <form id="signup-form">
+        <div class="name-fields">
+          <div>
+            <label class="field-label" for="first-name">First name</label>
+            <input
+              id="first-name"
+              name="firstName"
+              type="text"
+              placeholder="First name"
+              autocomplete="given-name"
+              aria-describedby="signup-status"
+              required
+            >
+          </div>
+          <div>
+            <label class="field-label" for="last-name">Last name</label>
+            <input
+              id="last-name"
+              name="lastName"
+              type="text"
+              placeholder="Last name"
+              autocomplete="family-name"
+              aria-describedby="signup-status"
+              required
+            >
+          </div>
+        </div>
         <label class="field-label" for="email">Email address</label>
         <input
           id="email"
@@ -224,15 +265,14 @@
 
     <script>
       const signupForm = document.querySelector("#signup-form");
-      const emailInput = document.querySelector("#email");
       const signupStatus = document.querySelector("#signup-status");
 
       signupForm.addEventListener("submit", (event) => {
         event.preventDefault();
-        signupStatus.textContent = "Email looks good. The rest of sign-up is not included in this demo yet.";
+        signupStatus.textContent = "Your details look good. The rest of sign-up is not included in this demo yet.";
       });
 
-      emailInput.addEventListener("input", () => {
+      signupForm.addEventListener("input", () => {
         signupStatus.textContent = "";
       });
     </script>
