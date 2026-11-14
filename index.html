@@ -110,7 +110,8 @@
       }
 
       input[type="email"],
-      input[type="text"] {
+      input[type="text"],
+      select {
         width: 100%;
         min-height: 52px;
         padding: 0 15px;
@@ -124,20 +125,49 @@
         transition: border-color 150ms ease, box-shadow 150ms ease;
       }
 
+      select {
+        padding-right: 42px;
+        appearance: none;
+        cursor: pointer;
+      }
+
       input[type="email"]::placeholder,
       input[type="text"]::placeholder {
         color: #97a3b8;
       }
 
+      select:invalid {
+        color: #97a3b8;
+      }
+
       input[type="email"]:hover,
-      input[type="text"]:hover {
+      input[type="text"]:hover,
+      select:hover {
         border-color: #c1a0df;
       }
 
       input[type="email"]:focus-visible,
-      input[type="text"]:focus-visible {
+      input[type="text"]:focus-visible,
+      select:focus-visible {
         border-color: var(--accent);
         box-shadow: 0 0 0 3px var(--focus-ring);
+      }
+
+      .select-wrap {
+        position: relative;
+      }
+
+      .select-wrap::after {
+        position: absolute;
+        top: 20px;
+        right: 17px;
+        width: 8px;
+        height: 8px;
+        border-right: 1.5px solid var(--muted-text);
+        border-bottom: 1.5px solid var(--muted-text);
+        content: "";
+        pointer-events: none;
+        transform: rotate(45deg);
       }
 
       .name-fields {
@@ -258,6 +288,31 @@
           required
         >
         <p class="hint" id="email-hint">Use an email address you can access.</p>
+        <label class="field-label" for="major">Major</label>
+        <div class="select-wrap">
+          <select
+            id="major"
+            name="major"
+            aria-describedby="major-hint signup-status"
+            required
+          >
+            <option value="" selected disabled>Select your major</option>
+            <option value="computer-science">Computer Science</option>
+            <option value="software-engineering">Software Engineering</option>
+            <option value="computer-engineering">Computer Engineering</option>
+            <option value="information-technology">Information Technology</option>
+            <option value="information-systems">Information Systems</option>
+            <option value="data-science">Data Science</option>
+            <option value="cybersecurity">Cybersecurity</option>
+            <option value="artificial-intelligence">Artificial Intelligence</option>
+            <option value="game-development">Game Development</option>
+            <option value="informatics">Informatics</option>
+            <option value="computer-science-education">Computer Science Education</option>
+            <option value="bioinformatics">Bioinformatics</option>
+            <option value="other">Other computer-related major</option>
+          </select>
+        </div>
+        <p class="hint" id="major-hint">Choose the major or concentration closest to yours.</p>
         <button type="submit">Continue</button>
         <p class="status" id="signup-status" role="status" aria-live="polite"></p>
       </form>
@@ -273,6 +328,10 @@
       });
 
       signupForm.addEventListener("input", () => {
+        signupStatus.textContent = "";
+      });
+
+      signupForm.addEventListener("change", () => {
         signupStatus.textContent = "";
       });
     </script>
