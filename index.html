@@ -313,6 +313,39 @@
           </select>
         </div>
         <p class="hint" id="major-hint">Choose the major or concentration closest to yours.</p>
+        <label class="field-label" for="career">Desired/current career field</label>
+        <div class="select-wrap">
+          <select
+            id="career"
+            name="career"
+            aria-describedby="career-hint signup-status"
+            required
+          >
+            <option value="" selected disabled>Select a career field</option>
+            <option value="software-developer">Software Developer / Engineer</option>
+            <option value="web-developer">Web Developer</option>
+            <option value="mobile-app-developer">Mobile App Developer</option>
+            <option value="game-developer">Game Developer</option>
+            <option value="data-scientist">Data Scientist</option>
+            <option value="data-analyst">Data Analyst</option>
+            <option value="machine-learning-engineer">AI / Machine Learning Engineer</option>
+            <option value="cybersecurity-analyst">Cybersecurity Analyst</option>
+            <option value="security-engineer">Security Engineer</option>
+            <option value="network-engineer">Network Engineer</option>
+            <option value="cloud-engineer">Cloud Engineer / Architect</option>
+            <option value="devops-engineer">DevOps Engineer</option>
+            <option value="database-administrator">Database Administrator</option>
+            <option value="systems-analyst">Systems Analyst</option>
+            <option value="qa-test-engineer">QA / Test Engineer</option>
+            <option value="ux-ui-designer">UX / UI Designer</option>
+            <option value="it-support-specialist">IT Support Specialist</option>
+            <option value="product-manager">Technical Product Manager</option>
+            <option value="computer-science-educator">Computer Science Educator</option>
+            <option value="researcher">Researcher</option>
+            <option value="other">Other computer-related career</option>
+          </select>
+        </div>
+        <p class="hint" id="career-hint">Choose the career field that best matches your interests or current role.</p>
         <button type="submit">Continue</button>
         <p class="status" id="signup-status" role="status" aria-live="polite"></p>
       </form>
