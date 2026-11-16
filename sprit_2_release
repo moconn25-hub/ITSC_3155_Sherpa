@@ -1,0 +1,21 @@
+## Sprint 2 Release (v0.2.0-sprint2)
+
+### Completed user stories
+- Sign-up: users can create an account that is saved to the database (#ISSUE-NUMBER)
+
+### ORM / data model status
+- Prisma schema with User, Profile, Program, and CareerField
+
+### Database integration status
+- SQLite via Prisma, with seed data for programs and career fields
+- Sign-up data persists after restarting the app
+
+### Known limitations
+- Each team member has a separate local SQLite database
+
+### How to run
+1. Clone the repo and run `npm install`
+2. Copy `.env.example` to `.env` and fill in your values
+3. Run `npx prisma migrate dev`
+4. Run the seed command
+5. Start the app with `npm start`
