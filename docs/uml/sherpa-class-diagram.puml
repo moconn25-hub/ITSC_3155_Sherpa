@@ -1,0 +1,50 @@
+@startuml SherpaSignUpClassDiagram
+title Sherpa — Sign-up Data Model
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+note top
+  IMPLEMENTED SCOPE: sign-up only
+  IDs are String values generated as UUIDs for SQLite/Prisma.
+  User.role is stored as a String (student, teacher, employer).
+end note
+
+package "Sign-up entities" {
+  class User {
+    +id: String <<PK, uuid>>
+    +email: String <<unique, required>>
+    +passwordHash: String <<required>>
+    +firstName: String <<required>>
+    +lastName: String <<required>>
+    +role: String <<required>>
+    +createdAt: DateTime <<required>>
+  }
+
+  class Profile {
+    +userId: String <<PK, FK>>
+    +majorProgramId: String <<FK>>
+    +desiredCareerId: String <<FK>>
+  }
+
+  class Program {
+    +id: String <<PK, uuid>>
+    +name: String <<unique, required>>
+  }
+
+  class CareerField {
+    +id: String <<PK, uuid>>
+    +name: String <<unique, required>>
+  }
+}
+
+User "1" -- "1" Profile : has
+Program "1" <-- "0..*" Profile : selected major
+CareerField "1" <-- "0..*" Profile : desired career
+
+note bottom
+  Sign-up form values: email, first name, last name, classification (role),
+  major, and desired career field. The password is stored as a hash on User.
+  Profile fields not collected during sign-up are intentionally excluded.
+end note
+@enduml

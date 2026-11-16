@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="710" viewBox="0 0 1920 710" role="img" aria-labelledby="title desc">
+<title id="title">Sherpa - Sign-up Data Model</title><desc id="desc">UML classes, fields, and associations from the accompanying PlantUML source.</desc>
+<rect width="1920" height="710" fill="#f7f8fc"/>
+<style>text{font-family:Segoe UI,Arial,sans-serif;fill:#24223a}.title{font-size:30px;font-weight:700}.sub{font-size:15px;fill:#64647a}.pkg{font-size:18px;font-weight:700;fill:#5b37bb}.name{font-size:15px;font-weight:700}.stereo{font-size:10px;fill:#6c5bad}.field{font-size:11px;fill:#44445b}.rel{font-size:12px;fill:#33334c}.assoc{stroke:#6553a2;stroke-width:1.6;fill:none}.mult{font-size:12px;fill:#5b37bb}</style>
+<text class="title" x="30" y="46">Sherpa - Sign-up Data Model</text><text class="sub" x="30" y="74">IMPLEMENTED SIGN-UP SCOPE: User, Profile, major and desired-career lookups. IDs are String UUIDs; role is stored as String.</text>
+<text class="pkg" x="70" y="128">Sign-up entities</text>
+<rect x="70" y="150" width="370" height="175" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 78 150 H 432 Q 440 150 440 158 V 184 H 70 V 158 Q 70 150 78 150" fill="#eae6fb"/>
+<text class="name" x="82" y="172">User</text>
+<text class="field" x="82" y="203">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<text class="field" x="82" y="222">email: String &lt;&lt;unique, required&gt;&gt;</text>
+<text class="field" x="82" y="241">passwordHash: String &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="82" y="260">firstName: String &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="82" y="279">lastName: String &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="82" y="298">role: String &lt;&lt;required&gt;&gt;</text>
+<text class="field" x="82" y="317">createdAt: DateTime &lt;&lt;required&gt;&gt;</text>
+<rect x="510" y="150" width="370" height="99" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 518 150 H 872 Q 880 150 880 158 V 184 H 510 V 158 Q 510 150 518 150" fill="#eae6fb"/>
+<text class="name" x="522" y="172">Profile</text>
+<text class="field" x="522" y="203">userId: String &lt;&lt;PK, FK&gt;&gt;</text>
+<text class="field" x="522" y="222">majorProgramId: String &lt;&lt;FK&gt;&gt;</text>
+<text class="field" x="522" y="241">desiredCareerId: String &lt;&lt;FK&gt;&gt;</text>
+<rect x="1050" y="145" width="300" height="80" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 1058 145 H 1342 Q 1350 145 1350 153 V 179 H 1050 V 153 Q 1050 145 1058 145" fill="#eae6fb"/>
+<text class="name" x="1062" y="167">Program</text>
+<text class="field" x="1062" y="198">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<text class="field" x="1062" y="217">name: String &lt;&lt;unique, required&gt;&gt;</text>
+<rect x="1050" y="445" width="300" height="80" rx="8" fill="#fff" stroke="#bbb9d1"/>
+<path d="M 1058 445 H 1342 Q 1350 445 1350 453 V 479 H 1050 V 453 Q 1050 445 1058 445" fill="#eae6fb"/>
+<text class="name" x="1062" y="467">CareerField</text>
+<text class="field" x="1062" y="498">id: String &lt;&lt;PK, uuid&gt;&gt;</text>
+<text class="field" x="1062" y="517">name: String &lt;&lt;unique, required&gt;&gt;</text>
+<line class="assoc" x1="440" y1="205" x2="510" y2="205"/><text class="mult" x="447" y="196">1</text><text class="mult" x="490" y="196">1</text><text class="rel" x="453" y="226">has</text>
+<path class="assoc" d="M 880 205 H 965 V 185 H 1050"/><text class="mult" x="895" y="196">0..*</text><text class="mult" x="1023" y="176">1</text><text class="rel" x="920" y="188">selected major</text>
+<path class="assoc" d="M 880 265 H 970 V 485 H 1050"/><text class="mult" x="895" y="256">0..*</text><text class="mult" x="1023" y="476">1</text><text class="rel" x="974" y="390">desired career</text>
+</svg>

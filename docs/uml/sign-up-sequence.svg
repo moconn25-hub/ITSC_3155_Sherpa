@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1960" height="1446" viewBox="0 0 1960 1446" role="img" aria-labelledby="title desc">
+<title id="title">Sherpa sign-up sequence</title><desc id="desc">Sign-up with Express, validation, Prisma, and SQLite including validation and duplicate-email branches.</desc><rect width="1960" height="1650" fill="#f7f8fc"/>
+<style>text{font-family:Segoe UI,Arial,sans-serif;fill:#25233b}.title{font-size:27px;font-weight:700}.subtitle{font-size:14px;fill:#66647b}.participant{font-size:12px;font-weight:700}.kind{font-size:11px;fill:#66647b}.message{font-size:12px}.section{font-size:12px;font-weight:700;fill:#5534ae}.life{stroke:#aaa9bf;stroke-width:1.2;stroke-dasharray:6 5}.request{stroke:#5c43a8;stroke-width:1.5}.response{stroke:#68687c;stroke-width:1.4;stroke-dasharray:5 4}</style>
+<text class="title" x="25" y="42">Sherpa - Sign-up Sequence</text><text class="subtitle" x="25" y="66">Express API | validation/auth service | Prisma data access | SQLite</text>
+<rect x="30" y="94" width="250" height="48" rx="8" fill="#eeeafd" stroke="#bdbbd3"/><text class="participant" text-anchor="middle" x="155" y="114">Visitor</text><text class="kind" text-anchor="middle" x="155" y="131">actor</text><line class="life" x1="155" y1="142" x2="155" y2="1426"/>
+<rect x="360" y="94" width="250" height="48" rx="8" fill="#eeeafd" stroke="#bdbbd3"/><text class="participant" text-anchor="middle" x="485" y="114">Sign-up form</text><text class="kind" text-anchor="middle" x="485" y="131">boundary</text><line class="life" x1="485" y1="142" x2="485" y2="1426"/>
+<rect x="690" y="94" width="250" height="48" rx="8" fill="#eeeafd" stroke="#bdbbd3"/><text class="participant" text-anchor="middle" x="815" y="114">Express API</text><text class="kind" text-anchor="middle" x="815" y="131">controller</text><line class="life" x1="815" y1="142" x2="815" y2="1426"/>
+<rect x="1020" y="94" width="250" height="48" rx="8" fill="#eeeafd" stroke="#bdbbd3"/><text class="participant" text-anchor="middle" x="1145" y="114">Validation and auth service</text><text class="kind" text-anchor="middle" x="1145" y="131">service</text><line class="life" x1="1145" y1="142" x2="1145" y2="1426"/>
+<rect x="1350" y="94" width="250" height="48" rx="8" fill="#eeeafd" stroke="#bdbbd3"/><text class="participant" text-anchor="middle" x="1475" y="114">Prisma data-access layer</text><text class="kind" text-anchor="middle" x="1475" y="131">data access</text><line class="life" x1="1475" y1="142" x2="1475" y2="1426"/>
+<rect x="1680" y="94" width="250" height="48" rx="8" fill="#eeeafd" stroke="#bdbbd3"/><text class="participant" text-anchor="middle" x="1805" y="114">SQLite database</text><text class="kind" text-anchor="middle" x="1805" y="131">database</text><line class="life" x1="1805" y1="142" x2="1805" y2="1426"/>
+<text class="message" text-anchor="middle" x="320" y="169">Enter email, password, first name, last</text>
+<text class="message" text-anchor="middle" x="320" y="183">name, major, desired career field, and</text>
+<text class="message" text-anchor="middle" x="320" y="197">classification</text>
+<line class="request" x1="163" y1="221" x2="475" y2="221"/>
+<path d="M 467 216 l 8 5 -8 5" fill="none" stroke="#5c43a8" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="320" y="240">Submit sign-up form</text>
+<line class="request" x1="163" y1="264" x2="475" y2="264"/>
+<path d="M 467 259 l 8 5 -8 5" fill="none" stroke="#5c43a8" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="650" y="288">POST /api/auth/signup with submitted</text>
+<text class="message" text-anchor="middle" x="650" y="302">fields</text>
+<line class="request" x1="493" y1="326" x2="805" y2="326"/>
+<path d="M 797 321 l 8 5 -8 5" fill="none" stroke="#5c43a8" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="980" y="344">Validate required fields, email, and</text>
+<text class="message" text-anchor="middle" x="980" y="358">classification</text>
+<line class="request" x1="823" y1="382" x2="1135" y2="382"/>
+<path d="M 1127 377 l 8 5 -8 5" fill="none" stroke="#5c43a8" stroke-width="1.5"/>
+<rect x="24" y="386" width="1912" height="27" rx="5" fill="#e9e5fb"/><text class="section" x="38" y="404">Invalid input</text>
+<text class="message" text-anchor="middle" x="980" y="434">Return field validation errors</text>
+<line class="response" x1="1137" y1="458" x2="825" y2="458"/>
+<path d="M 833 453 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="650" y="482">400 Bad Request with field errors</text>
+<line class="response" x1="807" y1="506" x2="495" y2="506"/>
+<path d="M 503 501 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="320" y="530">Display field errors</text>
+<line class="response" x1="477" y1="554" x2="165" y2="554"/>
+<path d="M 173 549 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<rect x="24" y="564" width="1912" height="27" rx="5" fill="#e9e5fb"/><text class="section" x="38" y="582">Valid input - create account</text>
+<path d="M 1145 628 h 45 v 13 h -38" fill="none" stroke="#5c43a8" stroke-width="1.5"/><text class="message" x="1198" y="620">Normalize email and hash password</text>
+<text class="message" text-anchor="middle" x="1310" y="660">Create User and Profile (major and desired</text>
+<text class="message" text-anchor="middle" x="1310" y="674">career)</text>
+<line class="request" x1="1153" y1="698" x2="1465" y2="698"/>
+<path d="M 1457 693 l 8 5 -8 5" fill="none" stroke="#5c43a8" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="1640" y="716">Insert User and Profile in one transaction</text>
+<line class="request" x1="1483" y1="740" x2="1795" y2="740"/>
+<path d="M 1787 735 l 8 5 -8 5" fill="none" stroke="#5c43a8" stroke-width="1.5"/>
+<rect x="24" y="750" width="1912" height="27" rx="5" fill="#e9e5fb"/><text class="section" x="38" y="768">Alternative: email already exists</text>
+<text class="message" text-anchor="middle" x="1640" y="798">Unique email constraint violation</text>
+<line class="response" x1="1797" y1="822" x2="1485" y2="822"/>
+<path d="M 1493 817 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="1310" y="846">Return unique constraint error</text>
+<line class="response" x1="1467" y1="870" x2="1155" y2="870"/>
+<path d="M 1163 865 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="980" y="894">Return email-already-registered error</text>
+<line class="response" x1="1137" y1="918" x2="825" y2="918"/>
+<path d="M 833 913 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="650" y="942">409 Conflict</text>
+<line class="response" x1="807" y1="966" x2="495" y2="966"/>
+<path d="M 503 961 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="320" y="990">Show account-exists message</text>
+<line class="response" x1="477" y1="1014" x2="165" y2="1014"/>
+<path d="M 173 1009 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<rect x="24" y="1024" width="1912" height="27" rx="5" fill="#e9e5fb"/><text class="section" x="38" y="1042">Alternative: account created</text>
+<text class="message" text-anchor="middle" x="1640" y="1072">Return persisted User and Profile</text>
+<line class="response" x1="1797" y1="1096" x2="1485" y2="1096"/>
+<path d="M 1493 1091 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="1310" y="1120">Return created User and Profile</text>
+<line class="response" x1="1467" y1="1144" x2="1155" y2="1144"/>
+<path d="M 1163 1139 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="980" y="1168">Return successful account creation</text>
+<line class="response" x1="1137" y1="1192" x2="825" y2="1192"/>
+<path d="M 833 1187 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="650" y="1216">201 Created</text>
+<line class="response" x1="807" y1="1240" x2="495" y2="1240"/>
+<path d="M 503 1235 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<rect x="24" y="1250" width="1912" height="27" rx="5" fill="#e9e5fb"/><text class="section" x="38" y="1268">Continue by classification</text>
+<text class="message" text-anchor="middle" x="320" y="1298">Student: continue to major skill</text>
+<text class="message" text-anchor="middle" x="320" y="1312">assessment</text>
+<line class="response" x1="477" y1="1336" x2="165" y2="1336"/>
+<path d="M 173 1331 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+<text class="message" text-anchor="middle" x="320" y="1354">Teacher or employer: continue to role</text>
+<text class="message" text-anchor="middle" x="320" y="1368">home/profile</text>
+<line class="response" x1="477" y1="1392" x2="165" y2="1392"/>
+<path d="M 173 1387 l -8 5 8 5" fill="none" stroke="#68687c" stroke-width="1.5"/>
+</svg>
