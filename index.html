@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f4ef">
+    <title>Sign up | Sherpa</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --page-background: #f5f7fb;
+        --surface: #ffffff;
+        --text: #26334b;
+        --muted-text: #8190a8;
+        --border: #e4e9f1;
+        --accent: #9256c7;
+        --accent-hover: #7d43b3;
+        --accent-soft: #eadcf7;
+        --focus-ring: rgba(146, 86, 199, 0.17);
+        color: var(--text);
+        background: var(--page-background);
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 32px 20px;
+        background:
+          radial-gradient(ellipse at 12% 90%, rgba(219, 203, 237, 0.34), transparent 34rem),
+          var(--page-background);
+      }
+
+      .signup {
+        width: min(100%, 480px);
+        padding: clamp(32px, 7vw, 56px);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        background: var(--surface);
+        box-shadow: 0 24px 70px rgba(47, 57, 78, 0.08);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 48px;
+        color: var(--accent);
+        font-size: 19px;
+        font-weight: 750;
+        letter-spacing: -0.04em;
+      }
+
+      .brand-mark {
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+
+      .brand-mark svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 13ch;
+        margin: 0;
+        color: var(--text);
+        font-size: clamp(34px, 8vw, 42px);
+        font-weight: 650;
+        letter-spacing: -0.055em;
+        line-height: 1.08;
+      }
+
+      .intro {
+        margin: 16px 0 32px;
+        color: var(--muted-text);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .field-label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 650;
+      }
+
+      input[type="email"],
+      input[type="text"],
+      select {
+        width: 100%;
+        min-height: 52px;
+        padding: 0 15px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        outline: none;
+        background: var(--surface);
+        color: var(--text);
+        font: inherit;
+        font-size: 15px;
+        transition: border-color 150ms ease, box-shadow 150ms ease;
+      }
+
+      select {
+        padding-right: 42px;
+        appearance: none;
+        cursor: pointer;
+      }
+
+      input[type="email"]::placeholder,
+      input[type="text"]::placeholder {
+        color: #97a3b8;
+      }
+
+      select:invalid {
+        color: #97a3b8;
+      }
+
+      input[type="email"]:hover,
+      input[type="text"]:hover,
+      select:hover {
+        border-color: #c1a0df;
+      }
+
+      input[type="email"]:focus-visible,
+      input[type="text"]:focus-visible,
+      select:focus-visible {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--focus-ring);
+      }
+
+      .select-wrap {
+        position: relative;
+      }
+
+      .select-wrap::after {
+        position: absolute;
+        top: 20px;
+        right: 17px;
+        width: 8px;
+        height: 8px;
+        border-right: 1.5px solid var(--muted-text);
+        border-bottom: 1.5px solid var(--muted-text);
+        content: "";
+        pointer-events: none;
+        transform: rotate(45deg);
+      }
+
+      .name-fields {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 22px;
+      }
+
+      .name-fields input {
+        min-width: 0;
+      }
+
+      .hint {
+        margin: 9px 0 22px;
+        color: var(--muted-text);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      button {
+        width: 100%;
+        min-height: 52px;
+        border: 0;
+        border-radius: 10px;
+        background: var(--accent);
+        color: #fff;
+        cursor: pointer;
+        font: inherit;
+        font-size: 15px;
+        font-weight: 650;
+        transition: background-color 150ms ease, transform 150ms ease;
+      }
+
+      button:hover {
+        background: var(--accent-hover);
+      }
+
+      button:active {
+        transform: translateY(1px);
+      }
+
+      button:focus-visible {
+        outline: 3px solid var(--focus-ring);
+        outline-offset: 3px;
+      }
+
+      .status {
+        min-height: 22px;
+        margin: 16px 0 0;
+        color: var(--accent);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="signup">
+      <div class="brand" aria-label="Sherpa">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="m3.5 18 6.1-9 3.2 4.3 2.2-3.1L20.5 18H3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="m9.2 9 1.7 2.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </span>
+        sherpa
+      </div>
+
+      <p class="eyebrow">Create your account</p>
+      <h1>Your next step starts here.</h1>
+      <p class="intro">Get started with Sherpa using your email address.</p>
+
+      <form id="signup-form">
+        <div class="name-fields">
+          <div>
+            <label class="field-label" for="first-name">First name</label>
+            <input
+              id="first-name"
+              name="firstName"
+              type="text"
+              placeholder="First name"
+              autocomplete="given-name"
+              aria-describedby="signup-status"
+              required
+            >
+          </div>
+          <div>
+            <label class="field-label" for="last-name">Last name</label>
+            <input
+              id="last-name"
+              name="lastName"
+              type="text"
+              placeholder="Last name"
+              autocomplete="family-name"
+              aria-describedby="signup-status"
+              required
+            >
+          </div>
+        </div>
+        <label class="field-label" for="email">Email address</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="you@example.edu"
+          autocomplete="email"
+          inputmode="email"
+          aria-describedby="email-hint signup-status"
+          required
+        >
+        <p class="hint" id="email-hint">Use an email address you can access.</p>
+        <label class="field-label" for="major">Major</label>
+        <div class="select-wrap">
+          <select
+            id="major"
+            name="major"
+            aria-describedby="major-hint signup-status"
+            required
+          >
+            <option value="" selected disabled>Select your major</option>
+            <option value="computer-science">Computer Science</option>
+            <option value="software-engineering">Software Engineering</option>
+            <option value="computer-engineering">Computer Engineering</option>
+            <option value="information-technology">Information Technology</option>
+            <option value="information-systems">Information Systems</option>
+            <option value="data-science">Data Science</option>
+            <option value="cybersecurity">Cybersecurity</option>
+            <option value="artificial-intelligence">Artificial Intelligence</option>
+            <option value="game-development">Game Development</option>
+            <option value="informatics">Informatics</option>
+            <option value="computer-science-education">Computer Science Education</option>
+            <option value="bioinformatics">Bioinformatics</option>
+            <option value="other">Other computer-related major</option>
+          </select>
+        </div>
+        <p class="hint" id="major-hint">Choose the major or concentration closest to yours.</p>
+        <label class="field-label" for="career">Desired/current career field</label>
+        <div class="select-wrap">
+          <select
+            id="career"
+            name="career"
+            aria-describedby="career-hint signup-status"
+            required
+          >
+            <option value="" selected disabled>Select a career field</option>
+            <option value="software-developer">Software Developer / Engineer</option>
+            <option value="web-developer">Web Developer</option>
+            <option value="mobile-app-developer">Mobile App Developer</option>
+            <option value="game-developer">Game Developer</option>
+            <option value="data-scientist">Data Scientist</option>
+            <option value="data-analyst">Data Analyst</option>
+            <option value="machine-learning-engineer">AI / Machine Learning Engineer</option>
+            <option value="cybersecurity-analyst">Cybersecurity Analyst</option>
+            <option value="security-engineer">Security Engineer</option>
+            <option value="network-engineer">Network Engineer</option>
+            <option value="cloud-engineer">Cloud Engineer / Architect</option>
+            <option value="devops-engineer">DevOps Engineer</option>
+            <option value="database-administrator">Database Administrator</option>
+            <option value="systems-analyst">Systems Analyst</option>
+            <option value="qa-test-engineer">QA / Test Engineer</option>
+            <option value="ux-ui-designer">UX / UI Designer</option>
+            <option value="it-support-specialist">IT Support Specialist</option>
+            <option value="product-manager">Technical Product Manager</option>
+            <option value="computer-science-educator">Computer Science Educator</option>
+            <option value="researcher">Researcher</option>
+            <option value="other">Other computer-related career</option>
+          </select>
+        </div>
+        <p class="hint" id="career-hint">Choose the career field that best matches your interests or current role.</p>
+        <label class="field-label" for="classification">Classification</label>
+        <div class="select-wrap">
+          <select
+            id="classification"
+            name="classification"
+            aria-describedby="classification-hint signup-status"
+            required
+          >
+            <option value="" selected disabled>Select a classification</option>
+            <option value="student">Student</option>
+            <option value="employer">Employer</option>
+            <option value="teacher">Teacher</option>
+          </select>
+        </div>
+        <p class="hint" id="classification-hint">Choose Student, Employer, or Teacher.</p>
+        <button type="submit">Continue</button>
+        <p class="status" id="signup-status" role="status" aria-live="polite"></p>
+      </form>
+    </main>
+
+    <script>
+      const signupForm = document.querySelector("#signup-form");
+      const signupStatus = document.querySelector("#signup-status");
+
+      signupForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        signupStatus.textContent = "Your details look good. The rest of sign-up is not included in this demo yet.";
+      });
+
+      signupForm.addEventListener("input", () => {
+        signupStatus.textContent = "";
+      });
+
+      signupForm.addEventListener("change", () => {
+        signupStatus.textContent = "";
+      });
+    </script>
+  </body>
+</html>
