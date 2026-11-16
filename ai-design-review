@@ -1,0 +1,18 @@
+# AI Design Review
+
+This document records decisions where GitHub Copilot's output was
+reviewed and corrected
+
+Decision 1:
+- **What Copilot proposed:** A role called `professor`.
+- **Problem:** Our UI and acceptance criteria use `teacher`.
+- **What we changed:** Renamed it to `teacher` everywhere.
+
+Decision 2:
+- **What Copilot proposed:** Made `MajorProgramID` and `DesiredCareerID` required fields for all acounts including teachers and employers.
+- **Problem:** Teachers and employers are not students and do not have a major or desired career.
+- **What we changed:** made both feilds optional and only requied for students.
+
+
+## Remaining assumptions to verify
+- not sure about connecting pages to eachother
