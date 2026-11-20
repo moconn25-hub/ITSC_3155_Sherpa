@@ -11,20 +11,37 @@ create test questions.
 **Instructions for installing dependencies:**
 
 **Instructions for running the application locally:**\
-Reveal in File Explorer
+1. Install dependencies with `npm install`.
+2. Copy `.env.example` to `.env`.
+3. Generate Prisma Client with `npm run db:generate`.
+4. Apply migrations with `npx prisma migrate deploy`.
+5. Add the sample major, career, skill, and course data with `npm run seed`.
+6. Start the app with `npm start` and open `http://localhost:3000`.
+
+In Windows PowerShell, use `npm.cmd` and `npx.cmd` if script execution blocks `npm` or `npx` (for example, `npm.cmd start`).
 
 **Descriptions of the implemented features:**
 - Sign in page\
 
 **Sign-up page**\
-Open `index.html` in a browser to preview the current sign-up page. The demo includes required, accessible first name, last name, email, major, career-field, and classification fields with browser-native validation; it does not submit or store the form data.
+The sign-up page creates persistent accounts through the local server. Students enter a major and career goal, then complete the six-question skill assessment; their account, profile, skills, and initial prerequisite-aware roadmap are saved together. Teachers and employers skip student-only details and do not receive roadmaps. Passwords are stored as salted scrypt hashes.
+
+**Sign-in**\
+Sign in with the email, password, and role used during sign-up. The server verifies the stored password hash and keeps the sign-in session in SQLite; student sign-in loads the existing roadmap and progress rather than generating a replacement. Sessions expire after seven days. The local demo binds only to `127.0.0.1`; production deployment requires HTTPS for secure session cookies.
+
+**Roadmap experience**\
+Students can navigate between Home, Roadmap, Network, and Profile. The roadmap ascends from Base Camp to a Career Summit through numbered, alternating checkpoints; each checkpoint links to course information, and students can mark a course complete. The progress bar is based on saved completed courses. Long routes scroll independently of the student navigation and can be explored by holding and dragging the trail. Seeded courses and their roadmap paths are illustrative samples, not official degree requirements.
+
+**Roadmap data foundation**\
+The Prisma schema contains course/skill relationships, prerequisite links, student skill assessments, and a persisted roadmap per student. The seed command adds illustrative sample courses aligned with the majors and career fields offered on the sign-up page. These sample courses are not official catalog entries or degree requirements.
+
+The student major choices reflect UNC Charlotte College of Computing and Informatics undergraduate programs: Artificial Intelligence, Computer Science (B.A. and B.S.), Data Science, and Sports Analytics. See the [CCI undergraduate studies page](https://cci.charlotte.edu/academics/undergraduate-studies/) for the current official list.
 
 **Instructions for testing the feature:**\
 [Vitest](https://vitest.dev/guide/#community) has been used for automated testing.\
-enter email and password: 
-(Student: student@sherpa.test / StudentDemo123!
-Instructor: instructor@sherpa.test / InstructorDemo123!
-Employer: employer@sherpa.test / EmployerDemo123!)
+Run the full suite with `npm test -- --run` after setting `DATABASE_URL` and applying migrations; the SQLite round-trip test needs a migrated database.\
+Run the sign-up, sign-in, and roadmap-ordering tests with `npm test -- --run src/auth/signup.test.js src/auth/signin.test.js src/roadmap/generate.test.js`.\
+Create an account on the sign-up page, then use that role, email, and password to test sign-in. Seeded course data does not create user accounts.
 
 SQLite was used due to it's easy of use and the ability to host a database locally.
 

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f9fc">
+    <link rel="stylesheet" href="signin.css">
+    <script src="course.js" defer></script>
+    <title>Course details | Sherpa</title>
+  </head>
+  <body>
+    <main>
+      <section id="course-view" aria-labelledby="course-heading" hidden>
+        <a class="back-link" href="Signin.html">Back to roadmap</a>
+        <p class="dashboard-eyebrow">Roadmap course</p>
+        <h1 id="course-heading"></h1>
+        <p id="course-code" class="course-code"></p>
+        <p id="course-description"></p>
+        <p id="course-sample-note" class="roadmap-note"></p>
+        <section id="course-prerequisites" aria-labelledby="prerequisites-heading" hidden>
+          <h2 id="prerequisites-heading">Prerequisites</h2>
+          <ul id="course-prerequisite-list"></ul>
+        </section>
+        <section id="course-skills" aria-labelledby="skills-heading" hidden>
+          <h2 id="skills-heading">Skills covered</h2>
+          <ul id="course-skill-list"></ul>
+        </section>
+        <p id="course-status" role="status" aria-live="polite"></p>
+        <button id="complete-course" class="signout-button" type="button" hidden>Mark as completed</button>
+      </section>
+      <section id="course-error-view" aria-labelledby="course-error-heading" hidden>
+        <p class="dashboard-eyebrow">Sherpa roadmap</p>
+        <h1 id="course-error-heading">Course unavailable</h1>
+        <p id="course-error" role="alert"></p>
+        <a class="back-link" href="Signin.html">Back to sign in</a>
+      </section>
+    </main>
+  </body>
+</html>

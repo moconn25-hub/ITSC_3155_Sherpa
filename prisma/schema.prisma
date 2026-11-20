@@ -17,6 +17,8 @@ model User {
   createdAt    DateTime @default(now())
 
   profile Profile?
+  roadmap Roadmap?
+  sessions AuthSession[]
 }
 
 model Profile {
@@ -24,21 +26,143 @@ model Profile {
   majorProgramId  String?
   desiredCareerId String?
 
-  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  majorProgram  Program?     @relation("ProfileMajor", fields: [majorProgramId], references: [id])
-  desiredCareer CareerField? @relation(fields: [desiredCareerId], references: [id])
+  user             User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  majorProgram     Program?        @relation("ProfileMajor", fields: [majorProgramId], references: [id])
+  desiredCareer    CareerField?    @relation(fields: [desiredCareerId], references: [id])
+  skillAssessments StudentSkill[]
 }
 
 model Program {
   id   String @id @default(uuid())
   name String @unique
 
-  profiles Profile[] @relation("ProfileMajor")
+  profiles       Profile[]       @relation("ProfileMajor")
+  courseMappings ProgramCourse[]
 }
 
 model CareerField {
   id   String @id @default(uuid())
   name String @unique
 
-  profiles Profile[]
+  profiles       Profile[]
+  courseMappings CourseCareer[]
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  title       String
+  description String
+  isSample    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  programMappings ProgramCourse[]
+  careerMappings  CourseCareer[]
+  skills          CourseSkill[]
+  prerequisites   CoursePrerequisite[] @relation("CoursePrerequisite")
+  requiredFor     CoursePrerequisite[] @relation("CoursePrerequisiteOf")
+  roadmapEntries  RoadmapCourse[]
+}
+
+model Skill {
+  id          String @id @default(uuid())
+  name        String @unique
+  description String
+
+  studentAssessments StudentSkill[]
+  courseMappings     CourseSkill[]
+}
+
+model ProgramCourse {
+  programId String
+  courseId  String
+
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+  course  Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@id([programId, courseId])
+  @@index([courseId])
+}
+
+model CourseCareer {
+  courseId      String
+  careerFieldId String
+
+  course      Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  careerField CareerField @relation(fields: [careerFieldId], references: [id], onDelete: Cascade)
+
+  @@id([courseId, careerFieldId])
+  @@index([careerFieldId])
+}
+
+model CourseSkill {
+  courseId   String
+  skillId    String
+  importance Int    @default(1)
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  skill  Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([courseId, skillId])
+  @@index([skillId])
+}
+
+model CoursePrerequisite {
+  courseId       String
+  prerequisiteId String
+
+  course       Course @relation("CoursePrerequisite", fields: [courseId], references: [id], onDelete: Cascade)
+  prerequisite Course @relation("CoursePrerequisiteOf", fields: [prerequisiteId], references: [id], onDelete: Cascade)
+
+  @@id([courseId, prerequisiteId])
+  @@index([prerequisiteId])
+}
+
+model StudentSkill {
+  profileUserId String
+  skillId       String
+  knowsSkill    Boolean
+  assessedAt    DateTime @default(now()) @updatedAt
+
+  profile Profile @relation(fields: [profileUserId], references: [userId], onDelete: Cascade)
+  skill   Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([profileUserId, skillId])
+  @@index([skillId])
+}
+
+model Roadmap {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  generatedAt DateTime @default(now())
+
+  user    User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courses RoadmapCourse[]
+}
+
+model RoadmapCourse {
+  roadmapId  String
+  courseId   String
+  position   Int
+  completedAt DateTime?
+
+  roadmap    Roadmap   @relation(fields: [roadmapId], references: [id], onDelete: Cascade)
+  course     Course    @relation(fields: [courseId], references: [id], onDelete: Restrict)
+
+  @@id([roadmapId, courseId])
+  @@unique([roadmapId, position])
+  @@index([courseId])
+}
+
+model AuthSession {
+  id        String   @id @default(uuid())
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
 }
