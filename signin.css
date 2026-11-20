@@ -266,6 +266,123 @@ main {
   background: var(--page);
 }
 
+.dashboard-eyebrow {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#student-view h1,
+#instructor-view h1,
+#employer-view h1 {
+  margin: 0 0 12px;
+  font-size: clamp(30px, 8vw, 38px);
+  line-height: 1.15;
+}
+
+#student-view > p:not(.dashboard-eyebrow),
+#instructor-view > p:not(.dashboard-eyebrow),
+#employer-view > p:not(.dashboard-eyebrow) {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.roadmap-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 24px 0 12px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.roadmap-summary strong {
+  color: var(--accent);
+  font-size: 18px;
+}
+
+.roadmap-summary span,
+.roadmap-note {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.roadmap-note {
+  line-height: 1.5;
+}
+
+.roadmap-courses {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 28px;
+  padding-left: 28px;
+}
+
+.roadmap-courses li {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.roadmap-courses li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.roadmap-courses strong,
+.roadmap-courses span {
+  display: block;
+}
+
+.roadmap-courses strong {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.roadmap-courses span {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.signout-button {
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.signout-button:hover {
+  border-color: #c1a0df;
+}
+
+.signout-button:focus-visible {
+  outline: 3px solid rgb(97 85 245 / 40%);
+  outline-offset: 3px;
+}
+
+#dashboard-error:not([hidden]) {
+  margin: 20px 28px 0;
+  padding: 12px 14px;
+  border: 1px solid rgb(163 52 69 / 20%);
+  border-radius: 10px;
+  background: var(--danger-bg);
+  color: var(--danger);
+  font-size: 14px;
+}
+
 [hidden] {
   display: none !important;
 }

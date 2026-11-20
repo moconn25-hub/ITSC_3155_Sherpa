@@ -18,6 +18,7 @@ model User {
 
   profile Profile?
   roadmap Roadmap?
+  sessions AuthSession[]
 }
 
 model Profile {
@@ -151,4 +152,17 @@ model RoadmapCourse {
   @@id([roadmapId, courseId])
   @@unique([roadmapId, position])
   @@index([courseId])
+}
+
+model AuthSession {
+  id        String   @id @default(uuid())
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
 }

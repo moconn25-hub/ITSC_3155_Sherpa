@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="signin.css">
-    <script src="signin.js"></script>
+    <script src="signin.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sign in | Sherpa</title>
   </head>
@@ -24,7 +24,7 @@
             <select id="role" name="role" required>
               <option value="" selected disabled>Select your role</option>
               <option value="student">Student</option>
-              <option value="instructor">Teacher</option>
+              <option value="teacher">Teacher</option>
               <option value="employer">Employer</option>
             </select>
           </div>
@@ -44,20 +44,36 @@
 
         <footer>
           <p>New to Sherpa? <a id="signup-button" href="index.html">Sign up</a></p>
-          <p>Your space. Safe and secure.</p>
+          <p>Your space. Sign in with the account you created.</p>
         </footer>
       </section>
 
       <section id="student-view" aria-labelledby="student-heading" hidden>
-        <h1 id="student-heading">Student</h1>
+        <p class="dashboard-eyebrow">Sherpa roadmap</p>
+        <h1 id="student-heading">Welcome, <span data-user-name></span></h1>
+        <p id="student-program"></p>
+        <div class="roadmap-summary">
+          <strong id="roadmap-progress">0% complete</strong>
+          <span id="roadmap-count">0 courses</span>
+        </div>
+        <p id="roadmap-note" class="roadmap-note"></p>
+        <ol id="roadmap-courses" class="roadmap-courses"></ol>
+        <button class="signout-button" type="button" data-signout>Sign out</button>
       </section>
+      <p id="dashboard-error" role="alert" hidden></p>
 
       <section id="instructor-view" aria-labelledby="instructor-heading" hidden>
-        <h1 id="instructor-heading">Instructor</h1>
+        <p class="dashboard-eyebrow">Sherpa</p>
+        <h1 id="instructor-heading">Welcome, <span data-user-name></span></h1>
+        <p>You are signed in as a teacher.</p>
+        <button class="signout-button" type="button" data-signout>Sign out</button>
       </section>
 
       <section id="employer-view" aria-labelledby="employer-heading" hidden>
-        <h1 id="employer-heading">Employer</h1>
+        <p class="dashboard-eyebrow">Sherpa</p>
+        <h1 id="employer-heading">Welcome, <span data-user-name></span></h1>
+        <p>You are signed in as an employer.</p>
+        <button class="signout-button" type="button" data-signout>Sign out</button>
       </section>
     </main>
   </body>

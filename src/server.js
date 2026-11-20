@@ -3,6 +3,7 @@ const { readFile } = require("node:fs/promises");
 const path = require("node:path");
 const prisma = require("./data/prisma");
 const { createSignup, SignupValidationError, DuplicateEmailError } = require("./auth/signup");
+const { getSession, signIn, signOut, SigninError } = require("./auth/signin");
 
 const root = path.resolve(__dirname, "..");
 const port = Number(process.env.PORT) || 3000;
@@ -16,18 +17,55 @@ const publicFiles = {
   "/signup.js": ["signup.js", "text/javascript; charset=utf-8"]
 };
 
-function sendJson(response, statusCode, body) {
+function sendJson(response, statusCode, body, headers = {}) {
   response.writeHead(statusCode, {
     "Content-Type": "application/json; charset=utf-8",
     "X-Content-Type-Options": "nosniff",
-    "Cache-Control": "no-store"
+    "Cache-Control": "no-store",
+    ...headers
   });
   response.end(JSON.stringify(body));
 }
 
+function getCookie(request, name) {
+  const cookies = request.headers.cookie || "";
+  for (const part of cookies.split(";")) {
+    const separator = part.indexOf("=");
+    if (separator < 0 || part.slice(0, separator).trim() !== name) {
+      continue;
+    }
+    return part.slice(separator + 1).trim();
+  }
+  return null;
+}
+
+function sessionCookie(token, maxAge) {
+  const cookie = `sherpa_session=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${maxAge}`;
+  return process.env.NODE_ENV === "production" ? `${cookie}; Secure` : cookie;
+}
+
+function sessionPayload(session) {
+  if (!session) {
+    return { error: "You are not signed in." };
+  }
+  const { user } = session;
+  const result = {
+    id: user.id,
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    role: user.role
+  };
+  if (user.role === "student") {
+    result.profile = user.profile;
+    result.roadmap = user.roadmap;
+  }
+  return { user: result };
+}
+
 async function readJson(request) {
   if (!request.headers["content-type"]?.startsWith("application/json")) {
-    const error = new Error("Send sign-up details as JSON.");
+    const error = new Error("Send account details as JSON.");
     error.statusCode = 415;
     throw error;
   }
@@ -72,6 +110,46 @@ async function handleSignup(request, response) {
   }
 }
 
+async function handleSignin(request, response) {
+  try {
+    const { token } = await signIn(prisma, await readJson(request));
+    const session = await getSession(prisma, token);
+    sendJson(response, 200, sessionPayload(session), {
+      "Set-Cookie": sessionCookie(token, 7 * 24 * 60 * 60)
+    });
+  } catch (error) {
+    if (error instanceof SigninError) {
+      sendJson(response, error.statusCode, { error: error.message });
+      return;
+    }
+    if (error.statusCode) {
+      sendJson(response, error.statusCode, { error: error.message });
+      return;
+    }
+
+    console.error("Sign-in failed:", error);
+    sendJson(response, 500, { error: "We could not sign you in. Please try again later." });
+  }
+}
+
+async function handleSession(request, response) {
+  const session = await getSession(prisma, getCookie(request, "sherpa_session"));
+  if (!session) {
+    sendJson(response, 401, { error: "You are not signed in." }, {
+      "Set-Cookie": sessionCookie("", 0)
+    });
+    return;
+  }
+  sendJson(response, 200, sessionPayload(session));
+}
+
+async function handleSignout(request, response) {
+  await signOut(prisma, getCookie(request, "sherpa_session"));
+  sendJson(response, 200, { ok: true }, {
+    "Set-Cookie": sessionCookie("", 0)
+  });
+}
+
 async function handleRequest(request, response) {
   const pathname = new URL(request.url, "http://localhost").pathname;
   if (pathname === "/api/auth/signup") {
@@ -81,6 +159,33 @@ async function handleRequest(request, response) {
       return;
     }
     await handleSignup(request, response);
+    return;
+  }
+  if (pathname === "/api/auth/signin") {
+    if (request.method !== "POST") {
+      response.setHeader("Allow", "POST");
+      sendJson(response, 405, { error: "Use POST to sign in." });
+      return;
+    }
+    await handleSignin(request, response);
+    return;
+  }
+  if (pathname === "/api/auth/session") {
+    if (request.method !== "GET") {
+      response.setHeader("Allow", "GET");
+      sendJson(response, 405, { error: "Use GET to check your sign-in session." });
+      return;
+    }
+    await handleSession(request, response);
+    return;
+  }
+  if (pathname === "/api/auth/signout") {
+    if (request.method !== "POST") {
+      response.setHeader("Allow", "POST");
+      sendJson(response, 405, { error: "Use POST to sign out." });
+      return;
+    }
+    await handleSignout(request, response);
     return;
   }
 

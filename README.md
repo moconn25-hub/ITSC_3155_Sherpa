@@ -22,7 +22,10 @@ create test questions.
 - Sign in page\
 
 **Sign-up page**\
-The sign-up page creates persistent accounts through the local server. Students enter a major and career goal, then complete the six-question skill assessment; their account, profile, skills, and initial prerequisite-aware roadmap are saved together. Teachers and employers skip student-only details and do not receive roadmaps. Passwords are stored as salted scrypt hashes. Newly created accounts are not yet accepted by the demo sign-in page.
+The sign-up page creates persistent accounts through the local server. Students enter a major and career goal, then complete the six-question skill assessment; their account, profile, skills, and initial prerequisite-aware roadmap are saved together. Teachers and employers skip student-only details and do not receive roadmaps. Passwords are stored as salted scrypt hashes.
+
+**Sign-in**\
+Sign in with the email, password, and role used during sign-up. The server verifies the stored password hash and keeps the sign-in session in SQLite; student sign-in loads the existing roadmap and progress rather than generating a replacement. Sessions expire after seven days. The local demo binds only to `127.0.0.1`; production deployment requires HTTPS for secure session cookies.
 
 **Roadmap data foundation**\
 The Prisma schema contains course/skill relationships, prerequisite links, student skill assessments, and a persisted roadmap per student. The seed command adds illustrative sample courses aligned with the majors and career fields offered on the sign-up page. These sample courses are not official catalog entries or degree requirements.
@@ -31,11 +34,8 @@ The student major choices reflect UNC Charlotte College of Computing and Informa
 
 **Instructions for testing the feature:**\
 [Vitest](https://vitest.dev/guide/#community) has been used for automated testing.\
-Run the sign-up and roadmap-ordering tests with `npm test -- --run src/auth/signup.test.js src/roadmap/generate.test.js`.\
-enter email and password: 
-(Student: student@sherpa.test / StudentDemo123!
-Instructor: instructor@sherpa.test / InstructorDemo123!
-Employer: employer@sherpa.test / EmployerDemo123!)
+Run the sign-up, sign-in, and roadmap-ordering tests with `npm test -- --run src/auth/signup.test.js src/auth/signin.test.js src/roadmap/generate.test.js`.\
+Create an account on the sign-up page, then use that role, email, and password to test sign-in. Seeded course data does not create user accounts.
 
 SQLite was used due to it's easy of use and the ability to host a database locally.
 
