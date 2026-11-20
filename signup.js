@@ -108,10 +108,10 @@ async function submitSignup() {
     });
     if (result.user.role === "student") {
       showStatus(
-        `Your account has been created and your initial roadmap includes ${result.user.roadmapCourseCount} sample courses. Sign-in for new accounts will be connected in a later step.`
+        `Your account has been created and your initial roadmap includes ${result.user.roadmapCourseCount} sample courses. Sign in to view your roadmap.`
       );
     } else {
-      showStatus("Your account has been created and saved. Sign-in for new accounts will be connected in a later step.");
+      showStatus("Your account has been created and saved. You can now sign in.");
     }
   } catch (error) {
     showStatus(error instanceof Error ? error.message : "We could not create your account. Please try again.");

@@ -8,6 +8,20 @@ const roleViews = {
   employer: document.querySelector("#employer-view")
 };
 
+function showStudentPage(page) {
+  for (const panel of document.querySelectorAll("[data-student-panel]")) {
+    panel.hidden = panel.dataset.studentPanel !== page;
+  }
+  for (const button of document.querySelectorAll("[data-student-page]")) {
+    if (button.dataset.studentPage === page) {
+      button.setAttribute("aria-current", "page");
+    } else {
+      button.removeAttribute("aria-current");
+    }
+  }
+  document.querySelector("#student-view").scrollTop = 0;
+}
+
 function showLoginError(message) {
   loginError.textContent = message;
   loginError.hidden = false;
@@ -19,31 +33,73 @@ function renderStudentRoadmap(user) {
   const completed = courses.filter(({ completedAt }) => completedAt).length;
   const percent = courses.length ? Math.round((completed / courses.length) * 100) : 0;
   const list = document.querySelector("#roadmap-courses");
+  const trail = document.querySelector("#roadmap-trail");
+  const trailLine = document.querySelector("#roadmap-trail-line");
   const profile = user.profile;
   const sampleCourses = courses.some(({ course }) => course.isSample);
+  const careerName = profile?.desiredCareer?.name || "your career goal";
+  const majorName = profile?.majorProgram?.name || "your major";
 
   document.querySelector("#roadmap-progress").textContent = `${percent}% complete`;
   document.querySelector("#roadmap-count").textContent =
     `${completed} of ${courses.length} courses completed`;
+  document.querySelector("#roadmap-progress-bar").value = percent;
+  document.querySelector("#home-progress").textContent = `${percent}% complete`;
+  document.querySelector("#home-count").textContent =
+    `${completed} of ${courses.length} courses completed`;
   document.querySelector("#student-program").textContent = profile
-    ? `${profile.majorProgram?.name || "Major not set"} · ${profile.desiredCareer?.name || "Career goal not set"}`
+    ? `${majorName} · ${careerName}`
     : "";
+  document.querySelector("#home-goal").textContent =
+    `Your course path is based on ${majorName} and ${careerName}.`;
+  document.querySelector("#profile-name").textContent = `${user.firstName} ${user.lastName}`;
+  document.querySelector("#profile-email").textContent = user.email;
+  document.querySelector("#profile-major").textContent = `Major: ${majorName}`;
+  document.querySelector("#profile-career").textContent = `Career goal: ${careerName}`;
   document.querySelector("#roadmap-note").textContent = courses.length
     ? sampleCourses
       ? "This saved path uses illustrative sample courses, not official degree requirements."
       : ""
     : "Your account has no saved roadmap yet. Please contact your Sherpa administrator.";
   list.replaceChildren();
+  list.style.setProperty("--course-count", courses.length);
+  trail.setAttribute("viewBox", `0 0 100 ${Math.max(courses.length * 168, 168)}`);
+  trailLine.setAttribute(
+    "points",
+    courses.map((_, index) => {
+      const row = courses.length - index - 1;
+      const x = index % 2 === 0 ? 35 : 65;
+      return `${x},${row * 168 + 84}`;
+    }).join(" ")
+  );
 
-  for (const entry of courses) {
+  for (const [index, entry] of courses.entries()) {
     const item = document.createElement("li");
+    const link = document.createElement("a");
+    item.dataset.checkpoint = String(index + 1);
+    item.dataset.completed = entry.completedAt ? "true" : "false";
+    item.style.gridRow = String(courses.length - index);
+    link.className = "roadmap-course-link";
+    link.href = `Course.html?id=${encodeURIComponent(entry.course.id)}`;
+    link.dataset.completed = entry.completedAt ? "true" : "false";
+    link.setAttribute(
+      "aria-label",
+      `Checkpoint ${index + 1}, ${entry.course.code}, ${entry.course.title}, ${entry.completedAt ? "completed" : "open course details"}`
+    );
+    const code = document.createElement("span");
     const title = document.createElement("strong");
-    const detail = document.createElement("span");
-    title.textContent = `${entry.course.code}: ${entry.course.title}`;
-    detail.textContent = entry.completedAt ? "Completed" : "In your roadmap";
-    item.append(title, detail);
+    const status = document.createElement("span");
+    code.className = "course-flag-code";
+    code.textContent = entry.course.code;
+    title.textContent = entry.course.title;
+    status.className = "course-flag-status";
+    status.textContent = entry.completedAt ? "Completed" : "View course";
+    link.append(code, title, status);
+    item.append(link);
     list.append(item);
   }
+
+  showStudentPage("roadmap");
 }
 
 function showUser(user) {
@@ -62,6 +118,12 @@ function showUser(user) {
     renderStudentRoadmap(user);
   }
   view.hidden = false;
+  if (user.role === "student") {
+    requestAnimationFrame(() => {
+      const map = document.querySelector("#roadmap-map-scroll");
+      map.scrollTop = map.scrollHeight;
+    });
+  }
 }
 
 async function loadExistingSession() {
@@ -111,6 +173,72 @@ loginForm.addEventListener("submit", async (event) => {
   } finally {
     submitButton.disabled = false;
   }
+});
+
+document.querySelectorAll("[data-student-page]").forEach((button) => {
+  button.addEventListener("click", () => {
+    showStudentPage(button.dataset.studentPage);
+  });
+});
+
+const roadmapMap = document.querySelector("#roadmap-map-scroll");
+let roadmapDrag = null;
+let suppressRoadmapClick = false;
+
+roadmapMap.addEventListener("pointerdown", (event) => {
+  if (!event.isPrimary || event.button !== 0 || event.pointerType === "touch") {
+    return;
+  }
+  roadmapDrag = {
+    pointerId: event.pointerId,
+    startY: event.clientY,
+    startScrollTop: roadmapMap.scrollTop,
+    moved: false
+  };
+});
+
+document.addEventListener("pointermove", (event) => {
+  if (!roadmapDrag || event.pointerId !== roadmapDrag.pointerId) {
+    return;
+  }
+  if (!roadmapDrag.moved && Math.abs(event.clientY - roadmapDrag.startY) > 4) {
+    roadmapDrag.moved = true;
+    roadmapMap.classList.add("is-dragging");
+  }
+  if (roadmapDrag.moved) {
+    event.preventDefault();
+    roadmapMap.scrollTop = roadmapDrag.startScrollTop + roadmapDrag.startY - event.clientY;
+  }
+}, { passive: false });
+
+function finishRoadmapDrag(event) {
+  if (!roadmapDrag || event.pointerId !== roadmapDrag.pointerId) {
+    return;
+  }
+  suppressRoadmapClick = roadmapDrag.moved;
+  roadmapMap.classList.remove("is-dragging");
+  roadmapDrag = null;
+  if (suppressRoadmapClick) {
+    window.setTimeout(() => {
+      suppressRoadmapClick = false;
+    }, 0);
+  }
+}
+
+document.addEventListener("pointerup", finishRoadmapDrag);
+document.addEventListener("pointercancel", finishRoadmapDrag);
+
+roadmapMap.addEventListener("click", (event) => {
+  if (suppressRoadmapClick && event.target instanceof Element &&
+      event.target.closest(".roadmap-course-link")) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+}, true);
+
+document.querySelector("[data-open-roadmap]").addEventListener("click", () => {
+  showStudentPage("roadmap");
+  document.querySelector("[data-student-page='roadmap']").focus();
 });
 
 document.querySelectorAll("[data-signout]").forEach((button) => {

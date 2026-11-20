@@ -52,13 +52,63 @@
         <p class="dashboard-eyebrow">Sherpa roadmap</p>
         <h1 id="student-heading">Welcome, <span data-user-name></span></h1>
         <p id="student-program"></p>
-        <div class="roadmap-summary">
-          <strong id="roadmap-progress">0% complete</strong>
-          <span id="roadmap-count">0 courses</span>
-        </div>
-        <p id="roadmap-note" class="roadmap-note"></p>
-        <ol id="roadmap-courses" class="roadmap-courses"></ol>
-        <button class="signout-button" type="button" data-signout>Sign out</button>
+        <section class="student-panel" data-student-panel="home" hidden>
+          <p class="dashboard-eyebrow">Your next steps</p>
+          <h2>Keep moving toward your goal</h2>
+          <p id="home-goal"></p>
+          <div class="roadmap-summary">
+            <strong id="home-progress">0% complete</strong>
+            <span id="home-count">0 courses</span>
+          </div>
+          <button class="panel-action" type="button" data-open-roadmap>View your roadmap</button>
+        </section>
+        <section class="student-panel" data-student-panel="roadmap">
+          <div class="roadmap-summary">
+            <strong id="roadmap-progress">0% complete</strong>
+            <span id="roadmap-count">0 courses</span>
+          </div>
+          <progress id="roadmap-progress-bar" max="100" value="0" aria-label="Roadmap completion"></progress>
+          <p id="roadmap-note" class="roadmap-note"></p>
+          <div class="roadmap-map">
+            <p class="roadmap-endpoint roadmap-basecamp">Base Camp <span>Start here</span></p>
+            <div
+              id="roadmap-map-scroll"
+              class="roadmap-map-scroll"
+              role="region"
+              aria-label="Course checkpoints, ascending from Base Camp to the Career Summit. Hold and drag to explore."
+              tabindex="0"
+            >
+              <span class="roadmap-map-hint" aria-hidden="true">Hold and drag to explore</span>
+              <div class="roadmap-map-canvas">
+                <svg id="roadmap-trail" class="roadmap-trail" aria-hidden="true">
+                  <polyline id="roadmap-trail-line"></polyline>
+                </svg>
+                <ol id="roadmap-courses" class="roadmap-courses"></ol>
+              </div>
+            </div>
+            <p class="roadmap-endpoint roadmap-summit">Career Summit <span>Goal</span></p>
+          </div>
+        </section>
+        <section class="student-panel" data-student-panel="network" hidden>
+          <p class="dashboard-eyebrow">Community</p>
+          <h2>Network</h2>
+          <p>Student, instructor, and employer networking will be available here.</p>
+        </section>
+        <section class="student-panel" data-student-panel="profile" hidden>
+          <p class="dashboard-eyebrow">Your account</p>
+          <h2>Profile</h2>
+          <p id="profile-name"></p>
+          <p id="profile-email"></p>
+          <p id="profile-major"></p>
+          <p id="profile-career"></p>
+          <button class="signout-button" type="button" data-signout>Sign out</button>
+        </section>
+        <nav class="student-nav" aria-label="Student navigation">
+          <button type="button" data-student-page="home">Home</button>
+          <button type="button" data-student-page="roadmap" aria-current="page">Roadmap</button>
+          <button type="button" data-student-page="network">Network</button>
+          <button type="button" data-student-page="profile">Profile</button>
+        </nav>
       </section>
       <p id="dashboard-error" role="alert" hidden></p>
 

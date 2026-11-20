@@ -127,7 +127,26 @@ async function getSession(prisma, token, now = new Date()) {
                   position: true,
                   completedAt: true,
                   course: {
-                    select: { id: true, code: true, title: true, description: true, isSample: true }
+                    select: {
+                      id: true,
+                      code: true,
+                      title: true,
+                      description: true,
+                      isSample: true,
+                      prerequisites: {
+                        select: {
+                          prerequisite: {
+                            select: { code: true, title: true }
+                          }
+                        }
+                      },
+                      skills: {
+                        select: {
+                          importance: true,
+                          skill: { select: { name: true, description: true } }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -149,6 +168,43 @@ async function getSession(prisma, token, now = new Date()) {
   return { user: session.user };
 }
 
+async function setCourseCompletion(prisma, token, courseId, completed, now = new Date()) {
+  if (typeof completed !== "boolean" || typeof courseId !== "string" || !courseId) {
+    throw new SigninError("Choose a valid course completion status.", 400);
+  }
+
+  const session = await getSession(prisma, token, now);
+  if (!session) {
+    throw new SigninError("Please sign in to update your roadmap.", 401);
+  }
+  if (session.user.role !== "student" || !session.user.roadmap) {
+    throw new SigninError("Only students with a roadmap can update course progress.", 403);
+  }
+
+  const entry = await prisma.roadmapCourse.findUnique({
+    where: {
+      roadmapId_courseId: {
+        roadmapId: session.user.roadmap.id,
+        courseId
+      }
+    },
+    select: { roadmapId: true, courseId: true }
+  });
+  if (!entry) {
+    throw new SigninError("That course is not on your roadmap.", 404);
+  }
+
+  await prisma.roadmapCourse.update({
+    where: {
+      roadmapId_courseId: {
+        roadmapId: entry.roadmapId,
+        courseId: entry.courseId
+      }
+    },
+    data: { completedAt: completed ? now : null }
+  });
+}
+
 async function signOut(prisma, token) {
   if (typeof token !== "string" || !/^[0-9a-f]{64}$/i.test(token)) {
     return;
@@ -162,6 +218,7 @@ module.exports = {
   SigninError,
   getSession,
   passwordMatches,
+  setCourseCompletion,
   signIn,
   signOut
 };

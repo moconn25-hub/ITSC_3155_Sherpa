@@ -3,7 +3,13 @@ const { readFile } = require("node:fs/promises");
 const path = require("node:path");
 const prisma = require("./data/prisma");
 const { createSignup, SignupValidationError, DuplicateEmailError } = require("./auth/signup");
-const { getSession, signIn, signOut, SigninError } = require("./auth/signin");
+const {
+  getSession,
+  setCourseCompletion,
+  signIn,
+  signOut,
+  SigninError
+} = require("./auth/signin");
 
 const root = path.resolve(__dirname, "..");
 const port = Number(process.env.PORT) || 3000;
@@ -11,7 +17,9 @@ const maxRequestBytes = 16 * 1024;
 const publicFiles = {
   "/": ["index.html", "text/html; charset=utf-8"],
   "/index.html": ["index.html", "text/html; charset=utf-8"],
+  "/Course.html": ["Course.html", "text/html; charset=utf-8"],
   "/Signin.html": ["Signin.html", "text/html; charset=utf-8"],
+  "/course.js": ["course.js", "text/javascript; charset=utf-8"],
   "/signin.css": ["signin.css", "text/css; charset=utf-8"],
   "/signin.js": ["signin.js", "text/javascript; charset=utf-8"],
   "/signup.js": ["signup.js", "text/javascript; charset=utf-8"]
@@ -150,8 +158,44 @@ async function handleSignout(request, response) {
   });
 }
 
+async function handleCourseCompletion(request, response, courseId) {
+  try {
+    const body = await readJson(request);
+    await setCourseCompletion(
+      prisma,
+      getCookie(request, "sherpa_session"),
+      courseId,
+      body && typeof body === "object" ? body.completed : undefined
+    );
+    sendJson(response, 200, { ok: true });
+  } catch (error) {
+    if (error instanceof SigninError) {
+      sendJson(response, error.statusCode, { error: error.message });
+      return;
+    }
+    if (error.statusCode) {
+      sendJson(response, error.statusCode, { error: error.message });
+      return;
+    }
+
+    console.error("Could not update roadmap progress:", error);
+    sendJson(response, 500, { error: "We could not update your course progress." });
+  }
+}
+
 async function handleRequest(request, response) {
   const pathname = new URL(request.url, "http://localhost").pathname;
+  const roadmapCourseMatch = pathname.match(/^\/api\/roadmap\/courses\/([^/]+)$/);
+  if (roadmapCourseMatch) {
+    if (request.method !== "PATCH") {
+      response.setHeader("Allow", "PATCH");
+      sendJson(response, 405, { error: "Use PATCH to update course progress." });
+      return;
+    }
+    await handleCourseCompletion(request, response, decodeURIComponent(roadmapCourseMatch[1]));
+    return;
+  }
+
   if (pathname === "/api/auth/signup") {
     if (request.method !== "POST") {
       response.setHeader("Allow", "POST");

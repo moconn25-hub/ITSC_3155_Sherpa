@@ -3,7 +3,7 @@ import { scrypt as scryptCallback } from "node:crypto";
 import { describe, expect, it, vi } from "vitest";
 import signin from "./signin.js";
 
-const { getSession, signIn, signOut, SigninError } = signin;
+const { getSession, setCourseCompletion, signIn, signOut, SigninError } = signin;
 const scrypt = promisify(scryptCallback);
 
 async function passwordHash(password) {
@@ -128,5 +128,83 @@ describe("session lifecycle", () => {
 
     await signOut(prisma, token);
     expect(prisma.authSession.deleteMany.mock.calls[0][0].where.tokenHash).not.toBe(token);
+  });
+
+  it("only updates completion for a course on the signed-in student's roadmap", async () => {
+    const token = "12".repeat(32);
+    const now = new Date("2026-01-03T00:00:00Z");
+    const roadmapCourse = {
+      findUnique: vi.fn().mockResolvedValue({
+        roadmapId: "roadmap-id",
+        courseId: "course-id"
+      }),
+      update: vi.fn().mockResolvedValue({})
+    };
+    const prisma = {
+      authSession: {
+        findUnique: vi.fn().mockResolvedValue({
+          id: "session-id",
+          expiresAt: new Date("2026-01-10T00:00:00Z"),
+          user: {
+            id: "student-id",
+            email: "student@example.edu",
+            firstName: "Sam",
+            lastName: "Student",
+            role: "student",
+            profile: {},
+            roadmap: { id: "roadmap-id", courses: [] }
+          }
+        })
+      },
+      roadmapCourse
+    };
+
+    await setCourseCompletion(prisma, token, "course-id", true, now);
+    expect(roadmapCourse.findUnique).toHaveBeenCalledWith({
+      where: {
+        roadmapId_courseId: { roadmapId: "roadmap-id", courseId: "course-id" }
+      },
+      select: { roadmapId: true, courseId: true }
+    });
+    expect(roadmapCourse.update).toHaveBeenCalledWith({
+      where: {
+        roadmapId_courseId: { roadmapId: "roadmap-id", courseId: "course-id" }
+      },
+      data: { completedAt: now }
+    });
+  });
+
+  it("refuses to update a course not in the signed-in student's roadmap", async () => {
+    const token = "34".repeat(32);
+    const prisma = {
+      authSession: {
+        findUnique: vi.fn().mockResolvedValue({
+          id: "session-id",
+          expiresAt: new Date("2026-01-10T00:00:00Z"),
+          user: {
+            id: "student-id",
+            email: "student@example.edu",
+            firstName: "Sam",
+            lastName: "Student",
+            role: "student",
+            profile: {},
+            roadmap: { id: "roadmap-id", courses: [] }
+          }
+        })
+      },
+      roadmapCourse: {
+        findUnique: vi.fn().mockResolvedValue(null),
+        update: vi.fn()
+      }
+    };
+
+    await expect(setCourseCompletion(
+      prisma,
+      token,
+      "not-on-roadmap",
+      true,
+      new Date("2026-01-03T00:00:00Z")
+    )).rejects.toMatchObject({ statusCode: 404 });
+    expect(prisma.roadmapCourse.update).not.toHaveBeenCalled();
   });
 });
