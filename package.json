@@ -4,6 +4,7 @@
   "private": true,
   "description": "Sherpa student course and skills roadmap application",
   "scripts": {
+    "start": "node src/server.js",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",

@@ -11,16 +11,27 @@ create test questions.
 **Instructions for installing dependencies:**
 
 **Instructions for running the application locally:**\
-Reveal in File Explorer
+1. Install dependencies with `npm install`.
+2. Copy `.env.example` to `.env`.
+3. Generate Prisma Client with `npm run db:generate`.
+4. Apply migrations with `npx prisma migrate deploy`.
+5. Add the sample major, career, skill, and course data with `npm run seed`.
+6. Start the app with `npm start` and open `http://localhost:3000`.
 
 **Descriptions of the implemented features:**
 - Sign in page\
 
 **Sign-up page**\
-Open `index.html` in a browser to preview the current sign-up page. The demo includes required, accessible first name, last name, email, major, career-field, and classification fields with browser-native validation; it does not submit or store the form data.
+The sign-up page creates persistent accounts through the local server. Students enter a major and career goal, then complete the six-question skill assessment; their account, profile, skills, and initial prerequisite-aware roadmap are saved together. Teachers and employers skip student-only details and do not receive roadmaps. Passwords are stored as salted scrypt hashes. Newly created accounts are not yet accepted by the demo sign-in page.
+
+**Roadmap data foundation**\
+The Prisma schema contains course/skill relationships, prerequisite links, student skill assessments, and a persisted roadmap per student. The seed command adds illustrative sample courses aligned with the majors and career fields offered on the sign-up page. These sample courses are not official catalog entries or degree requirements.
+
+The student major choices reflect UNC Charlotte College of Computing and Informatics undergraduate programs: Artificial Intelligence, Computer Science (B.A. and B.S.), Data Science, and Sports Analytics. See the [CCI undergraduate studies page](https://cci.charlotte.edu/academics/undergraduate-studies/) for the current official list.
 
 **Instructions for testing the feature:**\
 [Vitest](https://vitest.dev/guide/#community) has been used for automated testing.\
+Run the sign-up and roadmap-ordering tests with `npm test -- --run src/auth/signup.test.js src/roadmap/generate.test.js`.\
 enter email and password: 
 (Student: student@sherpa.test / StudentDemo123!
 Instructor: instructor@sherpa.test / InstructorDemo123!

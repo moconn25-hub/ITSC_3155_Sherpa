@@ -111,6 +111,7 @@
 
       input[type="email"],
       input[type="text"],
+      input[type="password"],
       select {
         width: 100%;
         min-height: 52px;
@@ -142,12 +143,14 @@
 
       input[type="email"]:hover,
       input[type="text"]:hover,
+      input[type="password"]:hover,
       select:hover {
         border-color: #c1a0df;
       }
 
       input[type="email"]:focus-visible,
       input[type="text"]:focus-visible,
+      input[type="password"]:focus-visible,
       select:focus-visible {
         border-color: var(--accent);
         box-shadow: 0 0 0 3px var(--focus-ring);
@@ -223,6 +226,71 @@
         line-height: 1.5;
       }
 
+      .skill-assessment {
+        display: grid;
+        gap: 18px;
+      }
+
+      .skill-assessment[hidden],
+      #account-fields[hidden] {
+        display: none;
+      }
+
+      .skill-assessment h2 {
+        margin: 0;
+        font-size: 22px;
+        line-height: 1.25;
+      }
+
+      .skill-assessment > p {
+        margin: -8px 0 0;
+        color: var(--muted-text);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .skill-field {
+        display: grid;
+        gap: 8px;
+      }
+
+      .skill-field label {
+        font-size: 14px;
+        font-weight: 650;
+      }
+
+      .skill-actions {
+        display: grid;
+        gap: 10px;
+      }
+
+      .skill-actions .secondary {
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .skill-actions .secondary:hover {
+        background: #f7f3fb;
+      }
+
+      button:disabled {
+        cursor: wait;
+        opacity: 0.72;
+      }
+
+      .signin-link {
+        margin: 22px 0 0;
+        color: var(--muted-text);
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .signin-link a {
+        color: var(--accent);
+        font-weight: 650;
+      }
+
       @media (prefers-reduced-motion: reduce) {
         *,
         *::before,
@@ -250,138 +318,197 @@
       <p class="intro">Get started with Sherpa using your email address.</p>
 
       <form id="signup-form">
-        <div class="name-fields">
-          <div>
-            <label class="field-label" for="first-name">First name</label>
-            <input
-              id="first-name"
-              name="firstName"
-              type="text"
-              placeholder="First name"
-              autocomplete="given-name"
-              aria-describedby="signup-status"
+        <div id="account-fields">
+          <div class="name-fields">
+            <div>
+              <label class="field-label" for="first-name">First name</label>
+              <input
+                id="first-name"
+                name="firstName"
+                type="text"
+                placeholder="First name"
+                autocomplete="given-name"
+                aria-describedby="signup-status"
+                required
+              >
+            </div>
+            <div>
+              <label class="field-label" for="last-name">Last name</label>
+              <input
+                id="last-name"
+                name="lastName"
+                type="text"
+                placeholder="Last name"
+                autocomplete="family-name"
+                aria-describedby="signup-status"
+                required
+              >
+            </div>
+          </div>
+          <label class="field-label" for="email">Email address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="you@example.edu"
+            autocomplete="email"
+            inputmode="email"
+            aria-describedby="email-hint signup-status"
+            required
+          >
+          <p class="hint" id="email-hint">Use an email address you can access.</p>
+          <label class="field-label" for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="new-password"
+            minlength="12"
+            maxlength="128"
+            aria-describedby="password-hint signup-status"
+            required
+          >
+          <p class="hint" id="password-hint">Use at least 12 characters.</p>
+          <label class="field-label" for="confirm-password">Confirm password</label>
+          <input
+            id="confirm-password"
+            name="confirmPassword"
+            type="password"
+            autocomplete="new-password"
+            minlength="12"
+            maxlength="128"
+            required
+          >
+          <label class="field-label" for="classification">Classification</label>
+          <div class="select-wrap">
+            <select
+              id="classification"
+              name="role"
+              aria-describedby="classification-hint signup-status"
               required
             >
+              <option value="" selected disabled>Select a classification</option>
+              <option value="student">Student</option>
+              <option value="employer">Employer</option>
+              <option value="teacher">Teacher</option>
+            </select>
           </div>
-          <div>
-            <label class="field-label" for="last-name">Last name</label>
-            <input
-              id="last-name"
-              name="lastName"
-              type="text"
-              placeholder="Last name"
-              autocomplete="family-name"
-              aria-describedby="signup-status"
-              required
-            >
+          <p class="hint" id="classification-hint">Only students receive a course roadmap.</p>
+          <div id="student-profile">
+            <label class="field-label" for="major">Major</label>
+            <div class="select-wrap">
+              <select
+                id="major"
+                name="major"
+                aria-describedby="major-hint signup-status"
+                required
+              >
+                <option value="" selected disabled>Select your major</option>
+                <option value="artificial-intelligence-bs">Artificial Intelligence, B.S.</option>
+                <option value="computer-science-ba">Computer Science, B.A.</option>
+                <option value="computer-science-bs">Computer Science, B.S.</option>
+                <option value="data-science-bs">Data Science, B.S.</option>
+                <option value="sports-analytics-bs">Sports Analytics, B.S.</option>
+              </select>
+            </div>
+            <p class="hint" id="major-hint">Choose the major or concentration closest to yours.</p>
+            <label class="field-label" for="career">Desired/current career field</label>
+            <div class="select-wrap">
+              <select
+                id="career"
+                name="career"
+                aria-describedby="career-hint signup-status"
+                required
+              >
+                <option value="" selected disabled>Select a career field</option>
+                <option value="software-developer">Software Developer / Engineer</option>
+                <option value="web-developer">Web Developer</option>
+                <option value="mobile-app-developer">Mobile App Developer</option>
+                <option value="game-developer">Game Developer</option>
+                <option value="data-scientist">Data Scientist</option>
+                <option value="data-analyst">Data Analyst</option>
+                <option value="machine-learning-engineer">AI / Machine Learning Engineer</option>
+                <option value="cybersecurity-analyst">Cybersecurity Analyst</option>
+                <option value="security-engineer">Security Engineer</option>
+                <option value="network-engineer">Network Engineer</option>
+                <option value="cloud-engineer">Cloud Engineer / Architect</option>
+                <option value="devops-engineer">DevOps Engineer</option>
+                <option value="database-administrator">Database Administrator</option>
+                <option value="systems-analyst">Systems Analyst</option>
+                <option value="qa-test-engineer">QA / Test Engineer</option>
+                <option value="ux-ui-designer">UX / UI Designer</option>
+                <option value="it-support-specialist">IT Support Specialist</option>
+                <option value="product-manager">Technical Product Manager</option>
+                <option value="computer-science-educator">Computer Science Educator</option>
+                <option value="researcher">Researcher</option>
+                <option value="other">Other computer-related career</option>
+              </select>
+            </div>
+            <p class="hint" id="career-hint">Choose the career field that best matches your interests or current role.</p>
           </div>
         </div>
-        <label class="field-label" for="email">Email address</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="you@example.edu"
-          autocomplete="email"
-          inputmode="email"
-          aria-describedby="email-hint signup-status"
-          required
-        >
-        <p class="hint" id="email-hint">Use an email address you can access.</p>
-        <label class="field-label" for="major">Major</label>
-        <div class="select-wrap">
-          <select
-            id="major"
-            name="major"
-            aria-describedby="major-hint signup-status"
-            required
-          >
-            <option value="" selected disabled>Select your major</option>
-            <option value="computer-science">Computer Science</option>
-            <option value="software-engineering">Software Engineering</option>
-            <option value="computer-engineering">Computer Engineering</option>
-            <option value="information-technology">Information Technology</option>
-            <option value="information-systems">Information Systems</option>
-            <option value="data-science">Data Science</option>
-            <option value="cybersecurity">Cybersecurity</option>
-            <option value="artificial-intelligence">Artificial Intelligence</option>
-            <option value="game-development">Game Development</option>
-            <option value="informatics">Informatics</option>
-            <option value="computer-science-education">Computer Science Education</option>
-            <option value="bioinformatics">Bioinformatics</option>
-            <option value="other">Other computer-related major</option>
-          </select>
-        </div>
-        <p class="hint" id="major-hint">Choose the major or concentration closest to yours.</p>
-        <label class="field-label" for="career">Desired/current career field</label>
-        <div class="select-wrap">
-          <select
-            id="career"
-            name="career"
-            aria-describedby="career-hint signup-status"
-            required
-          >
-            <option value="" selected disabled>Select a career field</option>
-            <option value="software-developer">Software Developer / Engineer</option>
-            <option value="web-developer">Web Developer</option>
-            <option value="mobile-app-developer">Mobile App Developer</option>
-            <option value="game-developer">Game Developer</option>
-            <option value="data-scientist">Data Scientist</option>
-            <option value="data-analyst">Data Analyst</option>
-            <option value="machine-learning-engineer">AI / Machine Learning Engineer</option>
-            <option value="cybersecurity-analyst">Cybersecurity Analyst</option>
-            <option value="security-engineer">Security Engineer</option>
-            <option value="network-engineer">Network Engineer</option>
-            <option value="cloud-engineer">Cloud Engineer / Architect</option>
-            <option value="devops-engineer">DevOps Engineer</option>
-            <option value="database-administrator">Database Administrator</option>
-            <option value="systems-analyst">Systems Analyst</option>
-            <option value="qa-test-engineer">QA / Test Engineer</option>
-            <option value="ux-ui-designer">UX / UI Designer</option>
-            <option value="it-support-specialist">IT Support Specialist</option>
-            <option value="product-manager">Technical Product Manager</option>
-            <option value="computer-science-educator">Computer Science Educator</option>
-            <option value="researcher">Researcher</option>
-            <option value="other">Other computer-related career</option>
-          </select>
-        </div>
-        <p class="hint" id="career-hint">Choose the career field that best matches your interests or current role.</p>
-        <label class="field-label" for="classification">Classification</label>
-        <div class="select-wrap">
-          <select
-            id="classification"
-            name="classification"
-            aria-describedby="classification-hint signup-status"
-            required
-          >
-            <option value="" selected disabled>Select a classification</option>
-            <option value="student">Student</option>
-            <option value="employer">Employer</option>
-            <option value="teacher">Teacher</option>
-          </select>
-        </div>
-        <p class="hint" id="classification-hint">Choose Student, Employer, or Teacher.</p>
-        <button type="submit">Continue</button>
+        <section class="skill-assessment" id="skill-assessment" aria-labelledby="skills-heading" hidden>
+          <h2 id="skills-heading">Assess your Computer Science skills</h2>
+          <p>Choose Yes or No for each skill so we can personalize your learning path.</p>
+          <div class="skill-field">
+            <label for="skill-python">Python</label>
+            <select id="skill-python" data-skill="Python" required>
+              <option value="" selected disabled>Select Yes or No</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="skill-field">
+            <label for="skill-algorithms">Algorithms</label>
+            <select id="skill-algorithms" data-skill="Algorithms" required>
+              <option value="" selected disabled>Select Yes or No</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="skill-field">
+            <label for="skill-data-structures">Data Structures</label>
+            <select id="skill-data-structures" data-skill="Data Structures" required>
+              <option value="" selected disabled>Select Yes or No</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="skill-field">
+            <label for="skill-oop">Object-Oriented Programming</label>
+            <select id="skill-oop" data-skill="Object-Oriented Programming" required>
+              <option value="" selected disabled>Select Yes or No</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="skill-field">
+            <label for="skill-systems">Computer Systems</label>
+            <select id="skill-systems" data-skill="Computer Systems" required>
+              <option value="" selected disabled>Select Yes or No</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="skill-field">
+            <label for="skill-databases">Databases</label>
+            <select id="skill-databases" data-skill="Databases" required>
+              <option value="" selected disabled>Select Yes or No</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="skill-actions">
+            <button type="submit" id="create-account">Create account</button>
+            <button class="secondary" type="button" id="back-to-account">Back to account details</button>
+          </div>
+        </section>
+        <button type="submit" id="continue-signup">Continue</button>
         <p class="status" id="signup-status" role="status" aria-live="polite"></p>
       </form>
+      <p class="signin-link">Already have an account? <a href="Signin.html">Sign in</a></p>
     </main>
 
-    <script>
-      const signupForm = document.querySelector("#signup-form");
-      const signupStatus = document.querySelector("#signup-status");
-
-      signupForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        signupStatus.textContent = "Your details look good. The rest of sign-up is not included in this demo yet.";
-      });
-
-      signupForm.addEventListener("input", () => {
-        signupStatus.textContent = "";
-      });
-
-      signupForm.addEventListener("change", () => {
-        signupStatus.textContent = "";
-      });
-    </script>
+    <script src="signup.js" defer></script>
   </body>
 </html>
